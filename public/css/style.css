@@ -11,7 +11,8 @@
 * { box-sizing: border-box; }
 
 body {
-  background: var(--sp-bg);
+  background-color: var(--sp-bg);
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2314315c' fill-opacity='0.04'%3E%3Cpath d='M30 0L60 30L30 60L0 30z' /%3E%3C/g%3E%3C/svg%3E");
   font-family: Georgia, "Times New Roman", serif;
   color: var(--sp-text);
   min-height: 100vh;
@@ -55,6 +56,10 @@ h1, h2, h3, h4, h5, h6,
   border-radius: 4px;
   box-shadow: none;
 }
+.login-card {
+  border-top: 3px solid var(--sp-accent);
+  background-image: linear-gradient(180deg, rgba(180,83,9,.03) 0%, transparent 120px);
+}
 
 .card-header {
   background: #fff;
@@ -91,7 +96,10 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .hero {
-  background: linear-gradient(180deg, #000000 0%, #14161b 50%, #1e2128 100%);
+  background-color: #000000;
+  background-image:
+    linear-gradient(180deg, rgba(0,0,0,.92) 0%, rgba(20,22,27,.96) 50%, rgba(30,33,40,.98) 100%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b45309' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   color: #fff;
   padding: 4.5rem 0 4rem;
   border-bottom: 3px solid var(--sp-accent);
@@ -133,6 +141,7 @@ h1, h2, h3, h4, h5, h6,
 }
 .home-body .stage-section {
   background: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M20 0L40 20L20 40L0 20z' /%3E%3C/g%3E%3C/svg%3E");
 }
 .stage-sub { color: #9aa0a6; margin-bottom: 0; }
 .stage-tabs {
@@ -295,8 +304,10 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .staff-section {
-  background: transparent;
+  background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%2314315c' fill-opacity='0.045'%3E%3Cpath d='M50 0L100 50L50 100L0 50z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   color: var(--sp-text);
+  position: relative;
 }
 .staff-card {
   background: #fff;
@@ -353,6 +364,58 @@ h1, h2, h3, h4, h5, h6,
   color: var(--sp-text);
 }
 
+.contact-section { background: transparent; }
+.contact-panel {
+  background: #101216;
+  border: 1px solid #262a31;
+  border-radius: 4px;
+  padding: 2.5rem 2rem;
+  background-image: radial-gradient(circle at 85% 15%, rgba(180,83,9,.1) 0%, transparent 45%);
+}
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #16181d;
+  border: 1px solid #2c3038;
+  border-radius: 3px;
+  padding: 1.1rem 1.3rem;
+  text-decoration: none;
+  color: #e8eaed;
+  transition: border-color .22s ease, transform .22s ease, background-color .22s ease;
+}
+.contact-link:hover { border-color: var(--sp-accent); transform: translateY(-2px); background: #1a1d23; color: #fff; }
+.contact-icon {
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  border-radius: 3px;
+  background: rgba(180,83,9,.15);
+  border: 1px solid rgba(180,83,9,.4);
+  color: var(--sp-accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.contact-label {
+  display: block;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: #7d838c;
+  font-weight: 600;
+  margin-bottom: .15rem;
+}
+.contact-value {
+  display: block;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: #fff;
+  word-break: break-word;
+}
+
 .badge-paid { background: #dcfce7; color: #166534; }
 .badge-due { background: #fee2e2; color: #991b1b; }
 .badge-partial { background: #fef3c7; color: #92400e; }
@@ -384,6 +447,7 @@ h1, h2, h3, h4, h5, h6,
   background: #fff;
   color: var(--sp-muted);
   width: 50%;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
 }
 .login-tab.active-staff { background: var(--sp-primary); color: #fff; border-color: var(--sp-primary); }
 .login-tab.active-student { background: #1e5b3a; color: #fff; border-color: #1e5b3a; }
