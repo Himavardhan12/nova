@@ -135,6 +135,49 @@ h1, h2, h3, h4, h5, h6,
 }
 .stage-value { color: #e8eaed; font-size: 1.02rem; line-height: 1.55; }
 
+.fee-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 10px;
+}
+.fee-item {
+  background: #16181d;
+  border: 1px solid #2c3038;
+  border-radius: 3px;
+  padding: .85rem 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.fee-name { color: #c5c9cf; font-weight: 600; font-size: .95rem; }
+.fee-amount { color: var(--sp-accent); font-weight: 700; font-size: 1.05rem; white-space: nowrap; }
+
+.route-block {
+  background: #16181d;
+  border: 1px solid #2c3038;
+  border-radius: 3px;
+  padding: 1.1rem 1.3rem;
+  margin-bottom: 10px;
+}
+.route-block h4 {
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: .3rem;
+}
+.route-stops { color: #9aa0a6; font-size: .9rem; margin-bottom: .55rem; line-height: 1.5; }
+.route-fee { color: var(--sp-accent); font-weight: 700; font-size: 1rem; }
+.route-annual { color: #7d838c; font-weight: 500; font-size: .88rem; }
+
+.stage-note {
+  color: #7d838c;
+  font-size: .88rem;
+  margin: 1.4rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid #262a31;
+}
+
 .badge-paid { background: #dcfce7; color: #166534; }
 .badge-due { background: #fee2e2; color: #991b1b; }
 .badge-partial { background: #fef3c7; color: #92400e; }

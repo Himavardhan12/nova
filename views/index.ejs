@@ -23,14 +23,14 @@
     </div>
 
     <div class="stage-tabs" role="tablist">
-      <button class="stage-btn active" data-stage="early" onclick="showStage('early', this)">Early Years</button>
-      <button class="stage-btn" data-stage="primary" onclick="showStage('primary', this)">Primary</button>
-      <button class="stage-btn" data-stage="middle" onclick="showStage('middle', this)">Middle School</button>
-      <button class="stage-btn" data-stage="secondary" onclick="showStage('secondary', this)">Secondary (SSLC)</button>
+      <button class="stage-btn active" data-tabbtn="stage-group" onclick="showTab('stage-group','stage-early', this)">Early Years</button>
+      <button class="stage-btn" data-tabbtn="stage-group" onclick="showTab('stage-group','stage-primary', this)">Primary</button>
+      <button class="stage-btn" data-tabbtn="stage-group" onclick="showTab('stage-group','stage-middle', this)">Middle School</button>
+      <button class="stage-btn" data-tabbtn="stage-group" onclick="showTab('stage-group','stage-secondary', this)">Secondary (SSLC)</button>
     </div>
 
     <div class="stage-panel">
-      <div class="stage-detail" id="stage-early">
+      <div class="stage-detail" data-group="stage-group" id="stage-early">
         <h3>Early Years</h3>
         <div class="stage-meta">
           <div class="stage-meta-item">
@@ -44,7 +44,7 @@
         </div>
       </div>
 
-      <div class="stage-detail" id="stage-primary" hidden>
+      <div class="stage-detail" data-group="stage-group" id="stage-primary" hidden>
         <h3>Primary</h3>
         <div class="stage-meta">
           <div class="stage-meta-item">
@@ -58,7 +58,7 @@
         </div>
       </div>
 
-      <div class="stage-detail" id="stage-middle" hidden>
+      <div class="stage-detail" data-group="stage-group" id="stage-middle" hidden>
         <h3>Middle School</h3>
         <div class="stage-meta">
           <div class="stage-meta-item">
@@ -72,7 +72,7 @@
         </div>
       </div>
 
-      <div class="stage-detail" id="stage-secondary" hidden>
+      <div class="stage-detail" data-group="stage-group" id="stage-secondary" hidden>
         <h3>Secondary (SSLC)</h3>
         <div class="stage-meta">
           <div class="stage-meta-item">
@@ -89,51 +89,87 @@
   </div>
 </section>
 
-<section class="container mb-5">
-  <h2 class="fw-bold mb-4">What the portal provides</h2>
-  <div class="row g-4">
-    <div class="col-md-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="fw-bold">Student profiles</h5>
-          <p class="text-muted small mb-0">
-            Every admitted student is issued a unique ID (format STU-YYYY-NNN). The profile
-            holds personal details, address, parent name and phone, guardian name and phone,
-            blood group and admission date.
-          </p>
-        </div>
-      </div>
+<section class="stage-section" id="fees">
+  <div class="container py-5">
+    <div class="mb-4">
+      <h2 class="fw-bold text-white">Fees, transport and activities</h2>
+      <p class="stage-sub">Annual fee structure, bus routes with stops and monthly charges, and optional activity programs.</p>
     </div>
-    <div class="col-md-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="fw-bold">Fee tracking</h5>
-          <p class="text-muted small mb-0">
-            Tuition, transport and activity fees are tracked separately. Each student record
-            shows the total assessed, amount paid, receipts issued and the balance remaining.
-          </p>
-        </div>
-      </div>
+
+    <div class="stage-tabs" role="tablist">
+      <button class="stage-btn active" data-tabbtn="fees-group" onclick="showTab('fees-group','fee-tuition', this)">Fee Structure</button>
+      <button class="stage-btn" data-tabbtn="fees-group" onclick="showTab('fees-group','fee-transport', this)">Transport Routes</button>
+      <button class="stage-btn" data-tabbtn="fees-group" onclick="showTab('fees-group','fee-sports', this)">Sports and Activities</button>
     </div>
-    <div class="col-md-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="fw-bold">Academics, transport and complaints</h5>
-          <p class="text-muted small mb-0">
-            Exam marks and grades are recorded per subject. Bus route and pickup point details
-            are shown for enrolled students. Complaints can be submitted and tracked to resolution.
-          </p>
+
+    <div class="stage-panel">
+      <div class="stage-detail tab-panel" data-group="fees-group" id="fee-tuition">
+        <h3>Annual Tuition Fee Structure</h3>
+        <div class="fee-grid">
+          <div class="fee-item"><span class="fee-name">Nursery</span><span class="fee-amount">₹15,000</span></div>
+          <div class="fee-item"><span class="fee-name">LKG</span><span class="fee-amount">₹16,000</span></div>
+          <div class="fee-item"><span class="fee-name">UKG</span><span class="fee-amount">₹17,000</span></div>
+          <div class="fee-item"><span class="fee-name">Class 1</span><span class="fee-amount">₹25,000</span></div>
+          <div class="fee-item"><span class="fee-name">Class 2</span><span class="fee-amount">₹25,000</span></div>
+          <div class="fee-item"><span class="fee-name">Class 3</span><span class="fee-amount">₹26,000</span></div>
+          <div class="fee-item"><span class="fee-name">Class 4</span><span class="fee-amount">₹27,000</span></div>
+          <div class="fee-item"><span class="fee-name">Class 5</span><span class="fee-amount">₹28,000</span></div>
+          <div class="fee-item"><span class="fee-name">Class 6</span><span class="fee-amount">₹30,000</span></div>
+          <div class="fee-item"><span class="fee-name">Class 7</span><span class="fee-amount">₹31,000</span></div>
+          <div class="fee-item"><span class="fee-name">Class 8</span><span class="fee-amount">₹32,000</span></div>
+          <div class="fee-item"><span class="fee-name">Class 9</span><span class="fee-amount">₹35,000</span></div>
+          <div class="fee-item"><span class="fee-name">Class 10 (SSLC)</span><span class="fee-amount">₹40,000</span></div>
         </div>
+        <p class="stage-note">Tuition fees are assessed for the full academic year (2025-26) and can be paid in installments. Transport and activity fees are charged separately.</p>
+      </div>
+
+      <div class="stage-detail tab-panel" data-group="fees-group" id="fee-transport" hidden>
+        <h3>Bus Routes and Transport Charges</h3>
+        <div class="route-block">
+          <h4>Route A: MG Road</h4>
+          <div class="route-stops">Stops: MG Road, Brigade Cross, City Center</div>
+          <div class="route-fee">₹700 per month <span class="route-annual">(₹7,000 for the year, 10 months)</span></div>
+        </div>
+        <div class="route-block">
+          <h4>Route B: Jayanagar</h4>
+          <div class="route-stops">Stops: Jayanagar 4th Block, South End, Ashoka Pillar</div>
+          <div class="route-fee">₹650 per month <span class="route-annual">(₹6,500 for the year, 10 months)</span></div>
+        </div>
+        <div class="route-block">
+          <h4>Route C: Whitefield</h4>
+          <div class="route-stops">Stops: ITPL Main, Hope Farm, Hoodi Circle</div>
+          <div class="route-fee">₹900 per month <span class="route-annual">(₹9,000 for the year, 10 months)</span></div>
+        </div>
+        <div class="route-block">
+          <h4>Route D: Rajajinagar</h4>
+          <div class="route-stops">Stops: Rajajinagar 2nd Stage, Chord Road, Basaveshwara Circle</div>
+          <div class="route-fee">₹750 per month <span class="route-annual">(₹7,500 for the year, 10 months)</span></div>
+        </div>
+        <p class="stage-note">Transport enrollment and pickup points are assigned by the school office. Monthly fees cover ten months of service (June to March).</p>
+      </div>
+
+      <div class="stage-detail tab-panel" data-group="fees-group" id="fee-sports" hidden>
+        <h3>Sports and Activity Programs</h3>
+        <div class="fee-grid">
+          <div class="fee-item"><span class="fee-name">Sports (Cricket)</span><span class="fee-amount">₹3,000</span></div>
+          <div class="fee-item"><span class="fee-name">Sports (Football)</span><span class="fee-amount">₹2,800</span></div>
+          <div class="fee-item"><span class="fee-name">Dance (Classical)</span><span class="fee-amount">₹2,500</span></div>
+          <div class="fee-item"><span class="fee-name">Dance (Western)</span><span class="fee-amount">₹2,200</span></div>
+          <div class="fee-item"><span class="fee-name">Music (Vocal)</span><span class="fee-amount">₹2,000</span></div>
+          <div class="fee-item"><span class="fee-name">Music (Instrumental)</span><span class="fee-amount">₹3,500</span></div>
+          <div class="fee-item"><span class="fee-name">Art and Craft</span><span class="fee-amount">₹1,500</span></div>
+        </div>
+        <p class="stage-note">Activity fees are annual and optional. Students can enroll in more than one program. Fees are recorded separately from tuition in each student's portal.</p>
       </div>
     </div>
   </div>
 </section>
 
 <script>
-function showStage(stage, btn) {
-  document.querySelectorAll('.stage-detail').forEach(function (el) { el.hidden = true; });
-  document.querySelectorAll('.stage-btn').forEach(function (el) { el.classList.remove('active'); });
-  document.getElementById('stage-' + stage).hidden = false;
+function showTab(group, id, btn) {
+  document.querySelectorAll('[data-group="' + group + '"]').forEach(function (el) { el.hidden = true; });
+  document.querySelectorAll('[data-tabbtn="' + group + '"]').forEach(function (el) { el.classList.remove('active'); });
+  document.getElementById(id).hidden = false;
   btn.classList.add('active');
 }
 </script>
