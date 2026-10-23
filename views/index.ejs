@@ -15,43 +15,77 @@
   </div>
 </section>
 
-<section class="container my-5" id="classes">
-  <div class="mb-4">
-    <h2 class="fw-bold">Classes covered</h2>
-    <p class="text-muted">One student record system from entry level through the secondary board year.</p>
-  </div>
-  <div class="table-responsive">
-    <table class="table table-bordered bg-white">
-      <thead class="table-light">
-        <tr>
-          <th>Stage</th>
-          <th>Classes</th>
-          <th>Subjects offered</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="fw-semibold">Early years</td>
-          <td>Nursery, LKG, UKG</td>
-          <td>English, Kannada, Mathematics, EVS, Drawing</td>
-        </tr>
-        <tr>
-          <td class="fw-semibold">Primary</td>
-          <td>Class 1 to Class 5</td>
-          <td>English, Kannada, Mathematics, EVS, Drawing</td>
-        </tr>
-        <tr>
-          <td class="fw-semibold">Middle school</td>
-          <td>Class 6 to Class 8</td>
-          <td>English, Kannada, Hindi, Mathematics, Science, Social Science, Computer</td>
-        </tr>
-        <tr>
-          <td class="fw-semibold">Secondary (SSLC)</td>
-          <td>Class 9 and Class 10</td>
-          <td>English, Kannada, Hindi, Mathematics, Science, Social Science, Computer, Physical Education</td>
-        </tr>
-      </tbody>
-    </table>
+<section class="stage-section" id="classes">
+  <div class="container py-5">
+    <div class="mb-4">
+      <h2 class="fw-bold text-white">Classes covered</h2>
+      <p class="stage-sub">One student record system from entry level through the secondary board year.</p>
+    </div>
+
+    <div class="stage-tabs" role="tablist">
+      <button class="stage-btn active" data-stage="early" onclick="showStage('early', this)">Early Years</button>
+      <button class="stage-btn" data-stage="primary" onclick="showStage('primary', this)">Primary</button>
+      <button class="stage-btn" data-stage="middle" onclick="showStage('middle', this)">Middle School</button>
+      <button class="stage-btn" data-stage="secondary" onclick="showStage('secondary', this)">Secondary (SSLC)</button>
+    </div>
+
+    <div class="stage-panel">
+      <div class="stage-detail" id="stage-early">
+        <h3>Early Years</h3>
+        <div class="stage-meta">
+          <div class="stage-meta-item">
+            <span class="stage-label">Classes</span>
+            <span class="stage-value">Nursery, LKG, UKG</span>
+          </div>
+          <div class="stage-meta-item">
+            <span class="stage-label">Subjects offered</span>
+            <span class="stage-value">English, Kannada, Mathematics, EVS, Drawing</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-detail" id="stage-primary" hidden>
+        <h3>Primary</h3>
+        <div class="stage-meta">
+          <div class="stage-meta-item">
+            <span class="stage-label">Classes</span>
+            <span class="stage-value">Class 1 to Class 5</span>
+          </div>
+          <div class="stage-meta-item">
+            <span class="stage-label">Subjects offered</span>
+            <span class="stage-value">English, Kannada, Mathematics, EVS, Drawing</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-detail" id="stage-middle" hidden>
+        <h3>Middle School</h3>
+        <div class="stage-meta">
+          <div class="stage-meta-item">
+            <span class="stage-label">Classes</span>
+            <span class="stage-value">Class 6 to Class 8</span>
+          </div>
+          <div class="stage-meta-item">
+            <span class="stage-label">Subjects offered</span>
+            <span class="stage-value">English, Kannada, Hindi, Mathematics, Science, Social Science, Computer</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage-detail" id="stage-secondary" hidden>
+        <h3>Secondary (SSLC)</h3>
+        <div class="stage-meta">
+          <div class="stage-meta-item">
+            <span class="stage-label">Classes</span>
+            <span class="stage-value">Class 9 and Class 10</span>
+          </div>
+          <div class="stage-meta-item">
+            <span class="stage-label">Subjects offered</span>
+            <span class="stage-value">English, Kannada, Hindi, Mathematics, Science, Social Science, Computer, Physical Education</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -94,5 +128,14 @@
     </div>
   </div>
 </section>
+
+<script>
+function showStage(stage, btn) {
+  document.querySelectorAll('.stage-detail').forEach(function (el) { el.hidden = true; });
+  document.querySelectorAll('.stage-btn').forEach(function (el) { el.classList.remove('active'); });
+  document.getElementById('stage-' + stage).hidden = false;
+  btn.classList.add('active');
+}
+</script>
 
 <%- include('partials/footer') %>

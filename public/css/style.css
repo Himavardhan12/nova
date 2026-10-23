@@ -81,6 +81,60 @@ h1, h2, h3, h4, h5, h6,
 }
 .hero h1 { font-weight: 700; }
 
+.stage-section {
+  background: linear-gradient(160deg, #0a0a0a 0%, #1a1d23 55%, #0d0f14 100%);
+  color: #e8eaed;
+}
+.stage-sub { color: #9aa0a6; margin-bottom: 0; }
+.stage-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 1.75rem;
+}
+.stage-btn {
+  background: #16181d;
+  color: #c5c9cf;
+  border: 1px solid #2c3038;
+  border-radius: 3px;
+  padding: .7rem 1.4rem;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-weight: 600;
+  font-size: .95rem;
+  cursor: pointer;
+}
+.stage-btn:hover { border-color: #4a505a; color: #fff; }
+.stage-btn.active {
+  background: var(--sp-accent);
+  border-color: var(--sp-accent);
+  color: #fff;
+}
+.stage-panel {
+  background: #101216;
+  border: 1px solid #262a31;
+  border-radius: 4px;
+  padding: 2rem;
+}
+.stage-detail h3 {
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: #fff;
+  margin-bottom: 1.25rem;
+  padding-bottom: .75rem;
+  border-bottom: 1px solid #262a31;
+}
+.stage-meta { display: grid; gap: 1.1rem; }
+.stage-meta-item { display: grid; gap: .25rem; }
+.stage-label {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: #7d838c;
+  font-weight: 600;
+}
+.stage-value { color: #e8eaed; font-size: 1.02rem; line-height: 1.55; }
+
 .badge-paid { background: #dcfce7; color: #166534; }
 .badge-due { background: #fee2e2; color: #991b1b; }
 .badge-partial { background: #fef3c7; color: #92400e; }
