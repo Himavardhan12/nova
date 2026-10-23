@@ -184,6 +184,117 @@ h1, h2, h3, h4, h5, h6,
   border-top: 1px solid #262a31;
 }
 
+.about-panel {
+  background: #101216;
+  border: 1px solid #262a31;
+  border-radius: 4px;
+  padding: 1.75rem;
+  height: 100%;
+}
+.about-panel h3 {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #fff;
+  margin-bottom: 1.1rem;
+  padding-bottom: .7rem;
+  border-bottom: 1px solid #262a31;
+}
+
+.chart-caption {
+  color: #7d838c;
+  font-size: .85rem;
+  margin-bottom: 1.2rem;
+}
+
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 220px;
+  padding-top: 1rem;
+}
+.bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  gap: 4px;
+}
+.bar {
+  width: 100%;
+  max-width: 42px;
+  background: #3b4250;
+  border-radius: 2px 2px 0 0;
+  min-height: 4px;
+}
+.bar-current { background: var(--sp-accent); }
+.bar-val {
+  color: #c5c9cf;
+  font-size: .72rem;
+  font-weight: 700;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+.bar-year {
+  color: #7d838c;
+  font-size: .68rem;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.staff-section {
+  background: transparent;
+  color: var(--sp-text);
+}
+.staff-card {
+  background: #fff;
+  border: 1px solid var(--sp-border);
+  border-radius: 4px;
+  padding: 1.5rem;
+  height: 100%;
+}
+.staff-card-lead { border-top: 3px solid var(--sp-accent); }
+.staff-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: .9rem;
+}
+.staff-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: .15rem;
+  color: var(--sp-text);
+}
+.staff-role {
+  color: var(--sp-accent);
+  font-weight: 600;
+  font-size: .88rem;
+  margin-bottom: .9rem;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+.staff-meta dt {
+  color: var(--sp-muted);
+  font-weight: 500;
+  font-size: .74rem;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+  margin-top: .55rem;
+}
+.staff-meta dd {
+  font-weight: 600;
+  font-size: .9rem;
+  margin-bottom: 0;
+  color: var(--sp-text);
+}
+
 .badge-paid { background: #dcfce7; color: #166534; }
 .badge-due { background: #fee2e2; color: #991b1b; }
 .badge-partial { background: #fef3c7; color: #92400e; }
