@@ -29,8 +29,7 @@
       <button class="stage-btn" data-tabbtn="stage-group" onclick="showTab('stage-group','stage-secondary', this)">Secondary (SSLC)</button>
     </div>
 
-    <div class="stage-panel" id="stage-panel">
-      <p class="stage-placeholder" id="stage-placeholder">Select a stage above to view classes and subjects.</p>
+    <div class="stage-panel" id="stage-panel" hidden>
       <div class="stage-detail" data-group="stage-group" id="stage-early" hidden>
         <h3>Early Years</h3>
         <div class="stage-meta">
@@ -103,8 +102,7 @@
       <button class="stage-btn" data-tabbtn="fees-group" onclick="showTab('fees-group','fee-sports', this)">Sports and Activities</button>
     </div>
 
-    <div class="stage-panel" id="fees-panel">
-      <p class="stage-placeholder" id="fees-placeholder">Select an option above to view fee details.</p>
+    <div class="stage-panel" id="fees-panel" hidden>
       <div class="stage-detail tab-panel" data-group="fees-group" id="fee-tuition" hidden>
         <h3>Annual Tuition Fee Structure</h3>
         <div class="fee-grid">
@@ -173,8 +171,8 @@ function showTab(group, id, btn) {
   document.querySelectorAll('[data-tabbtn="' + group + '"]').forEach(function (el) { el.classList.remove('active'); });
   document.getElementById(id).hidden = false;
   btn.classList.add('active');
-  if (group === 'stage-group') document.getElementById('stage-placeholder').hidden = true;
-  if (group === 'fees-group') document.getElementById('fees-placeholder').hidden = true;
+  var panelId = group === 'stage-group' ? 'stage-panel' : 'fees-panel';
+  document.getElementById(panelId).hidden = false;
 }
 </script>
 

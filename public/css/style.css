@@ -78,10 +78,10 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .hero {
-  background: var(--sp-primary);
+  background: linear-gradient(180deg, #000000 0%, #14161b 50%, #1e2128 100%);
   color: #fff;
   padding: 4rem 0 3.5rem;
-  border-bottom: 4px solid var(--sp-accent);
+  border-bottom: 3px solid var(--sp-accent);
 }
 .hero h1 { font-weight: 700; }
 
@@ -92,13 +92,6 @@ h1, h2, h3, h4, h5, h6,
   background: transparent;
 }
 .stage-sub { color: #9aa0a6; margin-bottom: 0; }
-.stage-placeholder {
-  color: #7d838c;
-  text-align: center;
-  padding: 1.5rem 0;
-  margin: 0;
-  font-size: .95rem;
-}
 .stage-tabs {
   display: flex;
   flex-wrap: wrap;
