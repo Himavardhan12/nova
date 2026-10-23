@@ -3,25 +3,20 @@
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-md-6 col-lg-5">
-      <div class="card shadow-sm">
+      <div class="card">
         <div class="card-body p-4 p-md-5">
           <div class="text-center mb-4">
-            <i class="bi bi-mortarboard-fill text-primary" style="font-size: 3rem;"></i>
-            <h3 class="fw-bold mt-2">School Portal Login</h3>
-            <p class="text-muted small">Select your portal and sign in</p>
+            <h3 class="fw-bold">Portal Login</h3>
+            <p class="text-muted small mb-0">Select your portal and sign in</p>
           </div>
 
           <div class="d-flex gap-2 mb-4">
-            <button type="button" id="tabStaff" class="login-tab active-staff" onclick="switchTab('staff')">
-              <i class="bi bi-person-badge d-block fs-4 mb-1"></i>Staff / Admin
-            </button>
-            <button type="button" id="tabStudent" class="login-tab" onclick="switchTab('student')">
-              <i class="bi bi-person-circle d-block fs-4 mb-1"></i>Student
-            </button>
+            <button type="button" id="tabStaff" class="login-tab active-staff" onclick="switchTab('staff')">Staff / Admin</button>
+            <button type="button" id="tabStudent" class="login-tab" onclick="switchTab('student')">Student</button>
           </div>
 
           <% if (error) { %>
-            <div class="alert alert-danger py-2 small"><i class="bi bi-exclamation-circle me-1"></i><%= error %></div>
+            <div class="alert alert-danger py-2 small"><%= error %></div>
           <% } %>
 
           <form method="POST" action="/login" id="loginForm">
@@ -29,31 +24,23 @@
 
             <div class="mb-3">
               <label class="form-label fw-semibold" id="usernameLabel">Username</label>
-              <div class="input-group">
-                <span class="input-group-text"><i class="bi bi-person"></i></span>
-                <input type="text" name="username" id="usernameInput" class="form-control" placeholder="admin" required autofocus>
-              </div>
+              <input type="text" name="username" id="usernameInput" class="form-control" placeholder="admin" required autofocus>
               <div class="form-text" id="usernameHint">Use: <code>admin</code></div>
             </div>
 
             <div class="mb-4">
               <label class="form-label fw-semibold">Password</label>
-              <div class="input-group">
-                <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                <input type="password" name="password" class="form-control" placeholder="Enter password" required>
-              </div>
+              <input type="password" name="password" class="form-control" placeholder="Enter password" required>
               <div class="form-text" id="passwordHint">Default staff password: <code>123456</code></div>
             </div>
 
-            <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold" id="submitBtn">
-              <i class="bi bi-box-arrow-in-right me-2"></i>Sign In as Staff
-            </button>
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold" id="submitBtn">Sign In as Staff</button>
           </form>
         </div>
       </div>
 
       <div class="text-center mt-3">
-        <a href="/" class="text-decoration-none small"><i class="bi bi-arrow-left me-1"></i>Back to home</a>
+        <a href="/" class="text-decoration-none small">Back to home</a>
       </div>
     </div>
   </div>
@@ -78,8 +65,8 @@ function switchTab(type) {
     usernameLabel.textContent = 'Staff Username';
     usernameHint.innerHTML = 'Use: <code>admin</code>';
     passwordHint.innerHTML = 'Default staff password: <code>123456</code>';
-    submitBtn.innerHTML = '<i class="bi bi-box-arrow-in-right me-2"></i>Sign In as Staff';
-    submitBtn.classList.remove('btn-info');
+    submitBtn.textContent = 'Sign In as Staff';
+    submitBtn.classList.remove('btn-success');
     submitBtn.classList.add('btn-primary');
   } else {
     studentTab.classList.add('active-student');
@@ -89,9 +76,9 @@ function switchTab(type) {
     usernameLabel.textContent = 'Student ID';
     usernameHint.innerHTML = 'Your unique student ID, e.g. <code>STU-2026-001</code>';
     passwordHint.innerHTML = 'Default student password: <code>654321</code>';
-    submitBtn.innerHTML = '<i class="bi bi-box-arrow-in-right me-2"></i>Sign In as Student';
+    submitBtn.textContent = 'Sign In as Student';
     submitBtn.classList.remove('btn-primary');
-    submitBtn.classList.add('btn-info');
+    submitBtn.classList.add('btn-success');
   }
 }
 </script>

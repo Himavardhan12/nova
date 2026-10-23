@@ -11,6 +11,14 @@ router.get('/', (req, res) => {
   res.render('index', { title: 'Sunrise Public School', classes: CLASSES });
 });
 
+router.get('/privacy', (req, res) => {
+  res.render('privacy', { title: 'Privacy Policy' });
+});
+
+router.get('/terms', (req, res) => {
+  res.render('terms', { title: 'Terms and Conditions' });
+});
+
 router.get('/login', (req, res) => {
   if (req.session.user) {
     if (req.session.user.role === 'admin') return res.redirect('/admin/dashboard');

@@ -8,18 +8,18 @@
     <div class="col-lg-10 col-md-9">
       <div class="d-flex justify-content-between align-items-start mb-4 flex-wrap gap-2">
         <div>
-          <a href="/admin/students" class="text-decoration-none small"><i class="bi bi-arrow-left me-1"></i>Back to Students</a>
+          <a href="/admin/students" class="text-decoration-none small">Back to Students</a>
           <h3 class="fw-bold mt-2 mb-0"><%= student.name %></h3>
           <span class="badge text-bg-dark font-monospace"><%= student.student_code %></span>
           <span class="badge text-bg-primary"><%= student.class %> - <%= student.section %></span>
           <% if (!student.active) { %><span class="badge text-bg-danger">Inactive</span><% } %>
         </div>
         <div class="d-flex gap-2">
-          <a href="/admin/students/<%= student.id %>/fees" class="btn btn-success"><i class="bi bi-cash me-1"></i>Fees</a>
-          <a href="/admin/students/<%= student.id %>/marks" class="btn btn-info"><i class="bi bi-journal-check me-1"></i>Marks</a>
-          <a href="/admin/students/<%= student.id %>/edit" class="btn btn-outline-primary"><i class="bi bi-pencil me-1"></i>Edit</a>
+          <a href="/admin/students/<%= student.id %>/fees" class="btn btn-success">Fees</a>
+          <a href="/admin/students/<%= student.id %>/marks" class="btn btn-info">Marks</a>
+          <a href="/admin/students/<%= student.id %>/edit" class="btn btn-outline-primary">Edit</a>
           <form method="POST" action="/admin/students/<%= student.id %>/delete" onsubmit="return confirm('Mark this student inactive?')">
-            <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash me-1"></i></button>
+            <button type="submit" class="btn btn-outline-danger"></button>
           </form>
         </div>
       </div>
@@ -37,37 +37,37 @@
           </div>
 
           <div class="card mb-4">
-            <div class="card-header"><i class="bi bi-person-lines-fill me-2"></i>Personal Details</div>
+            <div class="card-header">Personal Details</div>
             <div class="card-body">
               <dl class="detail-grid mb-0">
-                <dt>Date of Birth</dt><dd><%= student.dob || '—' %></dd>
-                <dt>Admission Date</dt><dd><%= student.admission_date || '—' %></dd>
-                <dt>Address</dt><dd><%= student.address || '—' %></dd>
-                <dt>Email</dt><dd><%= student.email || '—' %></dd>
+                <dt>Date of Birth</dt><dd><%= student.dob || 'N/A' %></dd>
+                <dt>Admission Date</dt><dd><%= student.admission_date || 'N/A' %></dd>
+                <dt>Address</dt><dd><%= student.address || 'N/A' %></dd>
+                <dt>Email</dt><dd><%= student.email || 'N/A' %></dd>
               </dl>
             </div>
           </div>
 
           <div class="card mb-4">
-            <div class="card-header"><i class="bi bi-telephone me-2"></i>Parent &amp; Guardian</div>
+            <div class="card-header">Parent &amp; Guardian</div>
             <div class="card-body">
               <dl class="detail-grid mb-0">
-                <dt>Parent Name</dt><dd><%= student.parent_name || '—' %></dd>
-                <dt>Parent Phone</dt><dd><a href="tel:<%= student.parent_phone %>" class="text-decoration-none"><%= student.parent_phone || '—' %></a></dd>
-                <dt>Guardian Name</dt><dd><%= student.guardian_name || '—' %></dd>
-                <dt>Guardian Phone</dt><dd><a href="tel:<%= student.guardian_phone %>" class="text-decoration-none"><%= student.guardian_phone || '—' %></a></dd>
+                <dt>Parent Name</dt><dd><%= student.parent_name || 'N/A' %></dd>
+                <dt>Parent Phone</dt><dd><a href="tel:<%= student.parent_phone %>" class="text-decoration-none"><%= student.parent_phone || 'N/A' %></a></dd>
+                <dt>Guardian Name</dt><dd><%= student.guardian_name || 'N/A' %></dd>
+                <dt>Guardian Phone</dt><dd><a href="tel:<%= student.guardian_phone %>" class="text-decoration-none"><%= student.guardian_phone || 'N/A' %></a></dd>
               </dl>
             </div>
           </div>
 
           <div class="card">
-            <div class="card-header"><i class="bi bi-bus-front me-2"></i>Transport</div>
+            <div class="card-header">Transport</div>
             <div class="card-body">
               <% if (student.transport_route_id) { %>
                 <dl class="detail-grid mb-0">
                   <dt>Route</dt><dd><%= student.route_name %></dd>
-                  <dt>Stops</dt><dd class="small"><%= student.stops || '—' %></dd>
-                  <dt>Pickup Point</dt><dd><%= student.pickup_point || '—' %></dd>
+                  <dt>Stops</dt><dd class="small"><%= student.stops || 'N/A' %></dd>
+                  <dt>Pickup Point</dt><dd><%= student.pickup_point || 'N/A' %></dd>
                   <dt>Monthly Fee</dt><dd>₹<%= student.monthly_fee %></dd>
                 </dl>
               <% } else { %>
@@ -80,8 +80,8 @@
         <div class="col-lg-8">
           <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
-              <span><i class="bi bi-wallet2 me-2"></i>Fee Summary — AY <%= fee.academicYear %></span>
-              <a href="/admin/students/<%= student.id %>/fees" class="btn btn-sm btn-success"><i class="bi bi-plus-circle me-1"></i>Record Payment</a>
+              <span>Fee Summary: AY <%= fee.academicYear %></span>
+              <a href="/admin/students/<%= student.id %>/fees" class="btn btn-sm btn-success">Record Payment</a>
             </div>
             <div class="card-body">
               <div class="row g-3 text-center">
@@ -117,7 +117,7 @@
 
           <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
-              <span><i class="bi bi-journal-check me-2"></i>Academic Performance</span>
+              <span>Academic Performance</span>
             </div>
             <div class="card-body p-0">
               <table class="table mb-0">
@@ -126,9 +126,9 @@
                   <% examStats.forEach(e => { %>
                     <tr>
                       <td><%= e.name %></td>
-                      <td class="text-center"><%= e.avg !== null ? e.avg + '%' : '—' %></td>
+                      <td class="text-center"><%= e.avg !== null ? e.avg + '%' : 'N/A' %></td>
                       <td class="text-center">
-                        <% if (e.grade) { %><span class="badge text-bg-<%= e.grade === 'F' ? 'danger' : (e.grade.startsWith('A') ? 'success' : 'primary') %>"><%= e.grade %></span><% } else { %>—<% } %>
+                        <% if (e.grade) { %><span class="badge text-bg-<%= e.grade === 'F' ? 'danger' : (e.grade.startsWith('A') ? 'success' : 'primary') %>"><%= e.grade %></span><% } else { %>N/A<% } %>
                       </td>
                     </tr>
                   <% }) %>
@@ -138,12 +138,12 @@
           </div>
 
           <div class="card mb-4">
-            <div class="card-header"><i class="bi bi-trophy me-2"></i>Extra Activities</div>
+            <div class="card-header">Extra Activities</div>
             <div class="card-body">
               <% if (enrolled.length) { %>
                 <div class="d-flex flex-wrap gap-2 mb-3">
                   <% enrolled.forEach(a => { %>
-                    <span class="badge text-bg-warning fs-6"><%= a.name %> — ₹<%= a.fee %></span>
+                    <span class="badge text-bg-warning fs-6"><%= a.name %>: ₹<%= a.fee %></span>
                   <% }) %>
                 </div>
               <% } %>
@@ -156,7 +156,7 @@
                     <% }) %>
                   </select>
                 </div>
-                <div class="col-md-4"><button class="btn btn-sm btn-primary w-100"><i class="bi bi-plus-circle me-1"></i>Enroll</button></div>
+                <div class="col-md-4"><button class="btn btn-sm btn-primary w-100">Enroll</button></div>
               </form>
               <% if (enrolled.length) { %>
                 <div class="table-responsive mt-3">
@@ -170,7 +170,7 @@
                           <td><%= a.enrolled_date %></td>
                           <td class="text-end">
                             <form method="POST" action="/admin/students/<%= student.id %>/activities/<%= a.activity_id %>/remove" class="d-inline" onsubmit="return confirm('Remove enrollment?')">
-                              <button class="btn btn-sm btn-outline-danger py-0"><i class="bi bi-x"></i></button>
+                              <button class="btn btn-sm btn-outline-danger py-0"></button>
                             </form>
                           </td>
                         </tr>
@@ -184,7 +184,7 @@
 
           <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
-              <span><i class="bi bi-receipt me-2"></i>Payment History</span>
+              <span>Payment History</span>
             </div>
             <div class="card-body p-0">
               <div class="table-responsive">
@@ -193,7 +193,7 @@
                   <tbody>
                     <% payments.forEach(p => { %>
                       <tr>
-                        <td class="font-monospace small"><%= p.receipt_no || '—' %></td>
+                        <td class="font-monospace small"><%= p.receipt_no || 'N/A' %></td>
                         <td><%= p.payment_date %></td>
                         <td><%= p.category %><% if (p.activity_name) { %> <span class="text-muted small">(<%= p.activity_name %>)</span><% } %></td>
                         <td class="text-capitalize"><%= p.mode %></td>
@@ -209,7 +209,7 @@
 
           <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-              <span><i class="bi bi-exclamation-triangle me-2"></i>Complaints (<%= complaints.length %>)</span>
+              <span>Complaints (<%= complaints.length %>)</span>
               <a href="/admin/complaints" class="small text-decoration-none">Manage all</a>
             </div>
             <div class="card-body p-0">

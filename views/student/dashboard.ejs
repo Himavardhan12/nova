@@ -7,7 +7,7 @@
     </div>
     <div class="col-lg-10 col-md-9">
       <div class="mb-4">
-        <h3 class="fw-bold mb-0">Welcome, <%= student.name %>!</h3>
+        <h3 class="fw-bold mb-0"><%= student.name %></h3>
         <p class="text-muted mb-0">
           <span class="badge text-bg-dark font-monospace"><%= student.student_code %></span>
           <span class="badge text-bg-primary"><%= student.class %> - <%= student.section %></span>
@@ -20,7 +20,6 @@
             <div class="card-body">
               <div class="stat-label">Total Fees Due</div>
               <div class="stat-value">₹<%= Number(fee.totalDue).toLocaleString('en-IN') %></div>
-              <i class="bi bi-wallet2 text-primary" style="font-size:2rem; opacity:.25; position:absolute; right:1rem; bottom:.75rem;"></i>
             </div>
           </div>
         </div>
@@ -29,7 +28,6 @@
             <div class="card-body">
               <div class="stat-label">Paid</div>
               <div class="stat-value text-success">₹<%= Number(fee.totalPaid).toLocaleString('en-IN') %></div>
-              <i class="bi bi-check-circle text-success" style="font-size:2rem; opacity:.25; position:absolute; right:1rem; bottom:.75rem;"></i>
             </div>
           </div>
         </div>
@@ -38,24 +36,21 @@
             <div class="card-body">
               <div class="stat-label">Remaining</div>
               <div class="stat-value <%= fee.remaining > 0 ? 'text-danger' : 'text-success' %>">₹<%= Number(fee.remaining).toLocaleString('en-IN') %></div>
-              <i class="bi bi-exclamation-circle text-danger" style="font-size:2rem; opacity:.25; position:absolute; right:1rem; bottom:.75rem;"></i>
             </div>
           </div>
         </div>
         <div class="col-sm-6 col-xl-3">
           <div class="card stat-card h-100">
             <div class="card-body">
-              <div class="stat-label">Activities</div>
+              <div class="stat-label">Activities Enrolled</div>
               <div class="stat-value"><%= enrolledCount %></div>
-              <small class="text-muted">enrolled</small>
-              <i class="bi bi-trophy text-warning" style="font-size:2rem; opacity:.25; position:absolute; right:1rem; bottom:.75rem;"></i>
             </div>
           </div>
         </div>
       </div>
 
       <div class="card mb-4">
-        <div class="card-header"><i class="bi bi-wallet2 me-2"></i>Fee Progress</div>
+        <div class="card-header">Fee Progress</div>
         <div class="card-body">
           <% const pct = fee.totalDue ? Math.min(100, (fee.totalPaid / fee.totalDue) * 100) : 100; %>
           <div class="d-flex justify-content-between mb-2">
@@ -66,11 +61,11 @@
             <div class="progress-bar <%= fee.remaining > 0 ? 'bg-warning' : 'bg-success' %>" style="width: <%= pct %>%"></div>
           </div>
           <% if (fee.remaining > 0) { %>
-            <p class="small text-danger mt-2 mb-0"><i class="bi bi-info-circle me-1"></i>₹<%= Number(fee.remaining).toLocaleString('en-IN') %> is still pending. Please contact the school office.</p>
+            <p class="small text-danger mt-2 mb-0">₹<%= Number(fee.remaining).toLocaleString('en-IN') %> is still pending. Please contact the school office.</p>
           <% } else { %>
-            <p class="small text-success mt-2 mb-0"><i class="bi bi-check-circle me-1"></i>All fees are paid. Thank you!</p>
+            <p class="small text-success mt-2 mb-0">All fees are paid.</p>
           <% } %>
-          <a href="/student/fees" class="btn btn-sm btn-outline-primary mt-3">View Fee Details <i class="bi bi-arrow-right ms-1"></i></a>
+          <a href="/student/fees" class="btn btn-sm btn-outline-primary mt-3">View Fee Details</a>
         </div>
       </div>
 
@@ -78,8 +73,7 @@
         <div class="col-md-4">
           <div class="card h-100">
             <div class="card-body">
-              <i class="bi bi-journal-check text-info fs-1"></i>
-              <h5 class="mt-2">Academics</h5>
+              <h5 class="fw-bold">Academics</h5>
               <p class="small text-muted"><%= marksCount %> mark entries recorded across exams.</p>
               <a href="/student/academics" class="btn btn-sm btn-outline-info">View Performance</a>
             </div>
@@ -88,8 +82,7 @@
         <div class="col-md-4">
           <div class="card h-100">
             <div class="card-body">
-              <i class="bi bi-bus-front text-success fs-1"></i>
-              <h5 class="mt-2">Transport</h5>
+              <h5 class="fw-bold">Transport</h5>
               <p class="small text-muted"><%= student.transport_route_id ? student.route_name : 'Not enrolled in transport.' %></p>
               <a href="/student/transport" class="btn btn-sm btn-outline-success">View Details</a>
             </div>
@@ -98,9 +91,8 @@
         <div class="col-md-4">
           <div class="card h-100">
             <div class="card-body">
-              <i class="bi bi-exclamation-triangle text-warning fs-1"></i>
-              <h5 class="mt-2">Complaints</h5>
-              <p class="small text-muted"><%= openComplaints %> open complaint(s). Raise a new one if needed.</p>
+              <h5 class="fw-bold">Complaints</h5>
+              <p class="small text-muted"><%= openComplaints %> open complaint(s).</p>
               <a href="/student/complaints" class="btn btn-sm btn-outline-warning">My Complaints</a>
             </div>
           </div>

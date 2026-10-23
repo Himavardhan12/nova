@@ -10,6 +10,23 @@ npm run seed     # creates db/school.db with 25 sample students
 npm start        # http://localhost:3000
 ```
 
+## Custom Domain
+
+The site emits a canonical URL on every page. When you connect a custom domain, set the
+`SITE_URL` environment variable before starting the server so canonical tags and any future
+metadata point at the real domain:
+
+```bash
+# Linux / macOS
+SITE_URL=https://www.yourschool.edu.in npm start
+
+# Windows (PowerShell)
+$env:SITE_URL="https://www.yourschool.edu.in"; npm start
+```
+
+Default when unset: `http://localhost:3000`. Point your domain's DNS at the host, serve over
+HTTPS (e.g. via a reverse proxy with TLS), and set `SITE_URL` to the HTTPS origin.
+
 ## Login Credentials
 
 | Portal | Username | Password |
@@ -41,7 +58,13 @@ npm start        # http://localhost:3000
 - **Complaints** — submit new complaint, track status & school response
 
 ## Classes Covered
-Nursery, LKG, UKG, Class 1–10 (SSLC)
+Nursery, LKG, UKG, Class 1 to Class 10 (SSLC)
+
+## Public Pages
+- `/` home
+- `/login` staff and student login
+- `/privacy` privacy policy
+- `/terms` terms and conditions
 
 ## Tech Stack
 - **Node.js + Express** — server

@@ -7,13 +7,13 @@
     </div>
     <div class="col-lg-10 col-md-9">
       <div class="mb-4">
-        <a href="/admin/students/<%= student.id %>" class="text-decoration-none small"><i class="bi bi-arrow-left me-1"></i>Back to Profile</a>
-        <h3 class="fw-bold mt-2 mb-0">Fee Management — <%= student.name %></h3>
+        <a href="/admin/students/<%= student.id %>" class="text-decoration-none small">Back to Profile</a>
+        <h3 class="fw-bold mt-2 mb-0">Fee Management: <%= student.name %></h3>
         <span class="badge text-bg-dark font-monospace"><%= student.student_code %></span>
         <span class="badge text-bg-primary"><%= student.class %></span>
       </div>
 
-      <% if (success) { %><div class="alert alert-success"><i class="bi bi-check-circle me-1"></i>Payment recorded successfully.</div><% } %>
+      <% if (success) { %><div class="alert alert-success">Payment recorded successfully.</div><% } %>
 
       <div class="row g-4 mb-4">
         <div class="col-md-3">
@@ -49,7 +49,7 @@
       <div class="row g-4">
         <div class="col-lg-4">
           <div class="card">
-            <div class="card-header"><i class="bi bi-plus-circle me-2"></i>Record Payment</div>
+            <div class="card-header">Record Payment</div>
             <div class="card-body">
               <form method="POST" action="/admin/students/<%= student.id %>/fees/pay">
                 <div class="mb-3">
@@ -95,7 +95,7 @@
                   <label class="form-label fw-semibold">Notes</label>
                   <input type="text" name="notes" class="form-control" placeholder="Optional note">
                 </div>
-                <button type="submit" class="btn btn-success w-100 fw-semibold"><i class="bi bi-check-circle me-2"></i>Record Payment</button>
+                <button type="submit" class="btn btn-success w-100 fw-semibold">Record Payment</button>
               </form>
             </div>
           </div>
@@ -103,7 +103,7 @@
 
         <div class="col-lg-8">
           <div class="card">
-            <div class="card-header"><i class="bi bi-receipt me-2"></i>Payment History</div>
+            <div class="card-header">Payment History</div>
             <div class="card-body p-0">
               <div class="table-responsive">
                 <table class="table mb-0">
@@ -111,11 +111,11 @@
                   <tbody>
                     <% payments.forEach(p => { %>
                       <tr>
-                        <td class="font-monospace small"><%= p.receipt_no || '—' %></td>
+                        <td class="font-monospace small"><%= p.receipt_no || 'N/A' %></td>
                         <td><%= p.payment_date %></td>
                         <td><%= p.category %><% if (p.activity_name) { %><div class="small text-muted"><%= p.activity_name %></div><% } %></td>
                         <td class="text-capitalize"><%= p.mode %></td>
-                        <td class="small text-muted"><%= p.notes || '—' %></td>
+                        <td class="small text-muted"><%= p.notes || 'N/A' %></td>
                         <td class="text-end fw-semibold">₹<%= Number(p.amount).toLocaleString('en-IN') %></td>
                       </tr>
                     <% }) %>

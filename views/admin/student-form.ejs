@@ -7,7 +7,7 @@
     </div>
     <div class="col-lg-10 col-md-9">
       <div class="mb-4">
-        <a href="/admin/students" class="text-decoration-none small"><i class="bi bi-arrow-left me-1"></i>Back to Students</a>
+        <a href="/admin/students" class="text-decoration-none small">Back to Students</a>
         <h3 class="fw-bold mt-2 mb-0"><%= student && student.id ? 'Edit Student' : 'Add New Student' %></h3>
       </div>
 
@@ -17,7 +17,7 @@
 
       <form method="POST" action="<%= student && student.id ? '/admin/students/' + student.id + '/edit' : '/admin/students/new' %>">
         <div class="card mb-4">
-          <div class="card-header"><i class="bi bi-person-vcard me-2"></i>Personal Details</div>
+          <div class="card-header">Personal Details</div>
           <div class="card-body row g-3">
             <% if (nextCode) { %>
               <div class="col-12">
@@ -80,7 +80,7 @@
         </div>
 
         <div class="card mb-4">
-          <div class="card-header"><i class="bi bi-people me-2"></i>Parent &amp; Guardian Contact</div>
+          <div class="card-header">Parent &amp; Guardian Contact</div>
           <div class="card-body row g-3">
             <div class="col-md-6">
               <label class="form-label">Parent Name</label>
@@ -106,7 +106,7 @@
         </div>
 
         <div class="card mb-4">
-          <div class="card-header"><i class="bi bi-bus-front me-2"></i>Transport Details</div>
+          <div class="card-header">Transport Details</div>
           <div class="card-body row g-3">
             <div class="col-md-6">
               <label class="form-label">Bus Route</label>
@@ -128,7 +128,7 @@
 
         <div class="d-flex gap-2">
           <button type="submit" class="btn btn-primary px-4 fw-semibold">
-            <i class="bi bi-check-circle me-2"></i><%= student && student.id ? 'Update Student' : 'Create Student' %>
+            <%= student && student.id ? 'Update Student' : 'Create Student' %>
           </button>
           <a href="/admin/students" class="btn btn-outline-secondary">Cancel</a>
         </div>

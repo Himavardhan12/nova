@@ -15,12 +15,12 @@
         <div class="row g-4">
           <div class="col-lg-7">
             <div class="card mb-4">
-              <div class="card-header"><i class="bi bi-bus-front me-2"></i>Route Information</div>
+              <div class="card-header">Route Information</div>
               <div class="card-body">
                 <dl class="detail-grid row mb-0">
                   <dt class="col-sm-4">Route Name</dt><dd class="col-sm-8"><%= student.route_name %></dd>
-                  <dt class="col-sm-4">Stops</dt><dd class="col-sm-8"><%= student.stops || '—' %></dd>
-                  <dt class="col-sm-4">Your Pickup Point</dt><dd class="col-sm-8 fw-bold"><%= student.pickup_point || '—' %></dd>
+                  <dt class="col-sm-4">Stops</dt><dd class="col-sm-8"><%= student.stops || 'N/A' %></dd>
+                  <dt class="col-sm-4">Your Pickup Point</dt><dd class="col-sm-8 fw-bold"><%= student.pickup_point || 'N/A' %></dd>
                   <dt class="col-sm-4">Monthly Fee</dt><dd class="col-sm-8">₹<%= student.monthly_fee %></dd>
                   <dt class="col-sm-4">Annual Fee (10 months)</dt><dd class="col-sm-8">₹<%= fee.transportDue.toLocaleString('en-IN') %></dd>
                 </dl>
@@ -29,7 +29,7 @@
           </div>
           <div class="col-lg-5">
             <div class="card mb-4">
-              <div class="card-header"><i class="bi bi-cash-coin me-2"></i>Transport Fee Status</div>
+              <div class="card-header">Transport Fee Status</div>
               <div class="card-body text-center">
                 <div class="small text-muted">Paid</div>
                 <div class="stat-value text-success">₹<%= fee.transportPaid.toLocaleString('en-IN') %></div>
@@ -43,7 +43,7 @@
             </div>
             <div class="card">
               <div class="card-body">
-                <h6 class="fw-bold"><i class="bi bi-info-circle me-2"></i>Bus Timings</h6>
+                <h6 class="fw-bold">Bus Timings</h6>
                 <p class="small text-muted mb-1">Morning Pickup: 7:15 AM - 8:00 AM (route dependent)</p>
                 <p class="small text-muted mb-0">Evening Drop: 3:45 PM - 4:30 PM (route dependent)</p>
               </div>
@@ -53,7 +53,7 @@
       <% } else { %>
         <div class="card">
           <div class="card-body text-center text-muted py-5">
-            <i class="bi bi-bus fs-1"></i>
+            
             <p class="mt-2 mb-0">You are not enrolled in school transport.</p>
             <p class="small mb-0">Contact the school office for transport enrollment.</p>
           </div>

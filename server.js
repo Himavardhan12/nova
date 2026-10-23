@@ -25,6 +25,7 @@ app.use(session({
 app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
   res.locals.currentPath = req.path;
+  res.locals.siteUrl = (process.env.SITE_URL || 'http://localhost:3000').replace(/\/$/, '');
   next();
 });
 

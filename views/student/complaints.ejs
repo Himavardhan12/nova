@@ -11,12 +11,12 @@
         <p class="text-muted mb-0">Submit and track your complaints</p>
       </div>
 
-      <% if (success) { %><div class="alert alert-success"><i class="bi bi-check-circle me-1"></i>Your complaint has been submitted.</div><% } %>
+      <% if (success) { %><div class="alert alert-success">Your complaint has been submitted.</div><% } %>
 
       <div class="row g-4">
         <div class="col-lg-4">
           <div class="card">
-            <div class="card-header"><i class="bi bi-plus-circle me-2"></i>Submit New Complaint</div>
+            <div class="card-header">Submit New Complaint</div>
             <div class="card-body">
               <form method="POST" action="/student/complaints/new">
                 <div class="mb-3">
@@ -36,7 +36,7 @@
                   <label class="form-label fw-semibold">Description</label>
                   <textarea name="description" class="form-control" rows="4" placeholder="Describe your complaint..."></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary w-100 fw-semibold"><i class="bi bi-send me-2"></i>Submit Complaint</button>
+                <button type="submit" class="btn btn-primary w-100 fw-semibold">Submit Complaint</button>
               </form>
             </div>
           </div>
@@ -44,7 +44,7 @@
 
         <div class="col-lg-8">
           <div class="card">
-            <div class="card-header"><i class="bi bi-list-check me-2"></i>My Complaints (<%= complaints.length %>)</div>
+            <div class="card-header">My Complaints (<%= complaints.length %>)</div>
             <div class="card-body">
               <% if (complaints.length) { %>
                 <% complaints.forEach(c => { %>
@@ -53,16 +53,16 @@
                       <div>
                         <h6 class="fw-bold mb-1"><%= c.title %></h6>
                         <div class="small text-muted">
-                          <i class="bi bi-tag me-1"></i><span class="text-capitalize"><%= c.category %></span>
+                          <span class="text-capitalize"><%= c.category %></span>
                           <span class="mx-2">|</span>
-                          <i class="bi bi-calendar me-1"></i><%= c.created_at.slice(0,16) %>
+                          <%= c.created_at.slice(0,16) %>
                         </div>
                       </div>
                       <span class="badge badge-<%= c.status %>"><%= c.status.replace('_',' ') %></span>
                     </div>
                     <% if (c.description) { %><p class="small mt-2 mb-2"><%= c.description %></p><% } %>
                     <% if (c.admin_remark) { %>
-                      <div class="alert alert-light py-2 small mb-0"><i class="bi bi-reply me-1"></i><strong>School Response:</strong> <%= c.admin_remark %></div>
+                      <div class="alert alert-light py-2 small mb-0"><strong>School Response:</strong> <%= c.admin_remark %></div>
                     <% } %>
                   </div>
                 <% }) %>

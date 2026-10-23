@@ -42,7 +42,7 @@
       </div>
 
       <div class="card mb-4">
-        <div class="card-header"><i class="bi bi-list-check me-2"></i>Fee Breakdown</div>
+        <div class="card-header">Fee Breakdown</div>
         <div class="table-responsive">
           <table class="table mb-0">
             <thead class="table-light"><tr><th>Category</th><th class="text-end">Total Due</th><th class="text-end">Paid</th><th class="text-end">Balance</th><th>Status</th></tr></thead>
@@ -81,7 +81,7 @@
       </div>
 
       <div class="card">
-        <div class="card-header"><i class="bi bi-receipt me-2"></i>Payment History</div>
+        <div class="card-header">Payment History</div>
         <div class="card-body p-0">
           <div class="table-responsive">
             <table class="table mb-0">
@@ -89,7 +89,7 @@
               <tbody>
                 <% payments.forEach(p => { %>
                   <tr>
-                    <td class="font-monospace small"><%= p.receipt_no || '—' %></td>
+                    <td class="font-monospace small"><%= p.receipt_no || 'N/A' %></td>
                     <td><%= p.payment_date %></td>
                     <td><%= p.category %><% if (p.activity_name) { %><div class="small text-muted"><%= p.activity_name %></div><% } %></td>
                     <td class="text-capitalize"><%= p.mode %></td>

@@ -1,24 +1,12 @@
 <div class="card mb-4 no-print">
   <div class="card-body p-2">
     <nav class="nav flex-column sidebar-nav">
-      <a class="nav-link <%= currentPath === '/admin/dashboard' ? 'active' : '' %>" href="/admin/dashboard">
-        <i class="bi bi-speedometer2 me-2"></i>Dashboard
-      </a>
-      <a class="nav-link <%= currentPath.startsWith('/admin/students') ? 'active' : '' %>" href="/admin/students">
-        <i class="bi bi-people me-2"></i>Students
-      </a>
-      <a class="nav-link <%= currentPath === '/admin/fees' ? 'active' : '' %>" href="/admin/fees">
-        <i class="bi bi-cash-coin me-2"></i>Fee Report
-      </a>
-      <a class="nav-link <%= currentPath === '/admin/complaints' ? 'active' : '' %>" href="/admin/complaints">
-        <i class="bi bi-exclamation-triangle me-2"></i>Complaints
-      </a>
-      <a class="nav-link <%= currentPath === '/admin/transport' ? 'active' : '' %>" href="/admin/transport">
-        <i class="bi bi-bus-front me-2"></i>Transport
-      </a>
-      <a class="nav-link <%= currentPath === '/admin/activities' ? 'active' : '' %>" href="/admin/activities">
-        <i class="bi bi-trophy me-2"></i>Activities
-      </a>
+      <a class="nav-link <%= currentPath === '/admin/dashboard' ? 'active' : '' %>" href="/admin/dashboard">Dashboard</a>
+      <a class="nav-link <%= currentPath.startsWith('/admin/students') ? 'active' : '' %>" href="/admin/students">Students</a>
+      <a class="nav-link <%= currentPath === '/admin/fees' ? 'active' : '' %>" href="/admin/fees">Fee Report</a>
+      <a class="nav-link <%= currentPath === '/admin/complaints' ? 'active' : '' %>" href="/admin/complaints">Complaints</a>
+      <a class="nav-link <%= currentPath === '/admin/transport' ? 'active' : '' %>" href="/admin/transport">Transport</a>
+      <a class="nav-link <%= currentPath === '/admin/activities' ? 'active' : '' %>" href="/admin/activities">Activities</a>
     </nav>
   </div>
 </div>
