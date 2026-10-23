@@ -55,50 +55,146 @@
   }
   var ctx = canvas.getContext('2d');
   if (!ctx) return;
-  var W = 0, H = 0, blobs = [], raf = null, running = false;
+  var W = 0, H = 0, blobs = [], streaks = [], dust = [], waves = [];
+  var raf = null, running = false, t = 0;
+
   var palette = [
-    [180, 83, 9], [180, 83, 9], [164, 90, 20],
-    [30, 58, 110], [20, 49, 92], [45, 70, 120],
-    [140, 70, 25], [25, 40, 80]
+    [180, 83, 9], [220, 120, 30], [164, 90, 20],
+    [30, 58, 110], [50, 90, 160], [20, 40, 90],
+    [140, 60, 20], [90, 40, 120], [25, 90, 90]
   ];
 
   function resize() {
     W = canvas.width = window.innerWidth;
     H = canvas.height = window.innerHeight;
-    var n = W < 768 ? 5 : 8;
+    var mobile = W < 768;
+    var n = mobile ? 6 : 10;
     blobs = [];
     for (var i = 0; i < n; i++) {
       var p = palette[i % palette.length];
       blobs.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        r: 200 + Math.random() * 300,
-        vx: (Math.random() - 0.5) * 0.22,
-        vy: (Math.random() - 0.5) * 0.22,
-        p: p
+        x: Math.random() * W, y: Math.random() * H,
+        r: 180 + Math.random() * 340,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        p: p, a: 0.1 + Math.random() * 0.08,
+        ph: Math.random() * Math.PI * 2
+      });
+    }
+    waves = [];
+    var wn = mobile ? 2 : 4;
+    for (var j = 0; j < wn; j++) {
+      waves.push({
+        amp: 40 + Math.random() * 70,
+        len: 0.003 + Math.random() * 0.004,
+        sp: 0.3 + Math.random() * 0.5,
+        y: H * (0.15 + 0.7 * (j / wn)),
+        ph: Math.random() * Math.PI * 2,
+        hue: j % 2 === 0 ? [180, 83, 9] : [40, 80, 150],
+        w: 1.2 + Math.random() * 1.4,
+        a: 0.12 + Math.random() * 0.08
+      });
+    }
+    streaks = [];
+    var dn = mobile ? 30 : 60;
+    dust = [];
+    for (var k = 0; k < dn; k++) {
+      dust.push({
+        x: Math.random() * W, y: Math.random() * H,
+        r: Math.random() * 1.4 + 0.4,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: -0.05 - Math.random() * 0.2,
+        a: 0.15 + Math.random() * 0.35,
+        tw: Math.random() * Math.PI * 2
       });
     }
   }
 
+  function spawnStreak() {
+    if (streaks.length > 3) return;
+    var fromLeft = Math.random() > 0.5;
+    streaks.push({
+      x: fromLeft ? -60 : W + 60,
+      y: Math.random() * H * 0.6,
+      vx: fromLeft ? (2.5 + Math.random() * 3) : -(2.5 + Math.random() * 3),
+      vy: 0.4 + Math.random() * 0.8,
+      len: 90 + Math.random() * 120,
+      life: 1,
+      decay: 0.006 + Math.random() * 0.006
+    });
+  }
+
   function draw() {
     if (!running) return;
+    t += 0.008;
     ctx.clearRect(0, 0, W, H);
+
     for (var i = 0; i < blobs.length; i++) {
       var b = blobs[i];
-      b.x += b.vx;
-      b.y += b.vy;
+      b.x += b.vx + Math.sin(t * 0.7 + b.ph) * 0.15;
+      b.y += b.vy + Math.cos(t * 0.5 + b.ph) * 0.12;
       if (b.x < -b.r) b.x = W + b.r;
       if (b.x > W + b.r) b.x = -b.r;
       if (b.y < -b.r) b.y = H + b.r;
       if (b.y > H + b.r) b.y = -b.r;
-      var g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
-      g.addColorStop(0, 'rgba(' + b.p[0] + ',' + b.p[1] + ',' + b.p[2] + ',0.13)');
+      var pulse = 1 + Math.sin(t * 1.2 + b.ph) * 0.08;
+      var rr = b.r * pulse;
+      var g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, rr);
+      g.addColorStop(0, 'rgba(' + b.p[0] + ',' + b.p[1] + ',' + b.p[2] + ',' + b.a + ')');
+      g.addColorStop(0.6, 'rgba(' + b.p[0] + ',' + b.p[1] + ',' + b.p[2] + ',' + (b.a * 0.35) + ')');
       g.addColorStop(1, 'rgba(' + b.p[0] + ',' + b.p[1] + ',' + b.p[2] + ',0)');
       ctx.fillStyle = g;
       ctx.beginPath();
-      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      ctx.arc(b.x, b.y, rr, 0, Math.PI * 2);
       ctx.fill();
     }
+
+    for (var w = 0; w < waves.length; w++) {
+      var wav = waves[w];
+      ctx.beginPath();
+      for (var x = 0; x <= W; x += 8) {
+        var y = wav.y + Math.sin(x * wav.len + t * wav.sp * 2 + wav.ph) * wav.amp
+                + Math.sin(x * wav.len * 2.3 + t * wav.sp) * (wav.amp * 0.3);
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = 'rgba(' + wav.hue[0] + ',' + wav.hue[1] + ',' + wav.hue[2] + ',' + wav.a + ')';
+      ctx.lineWidth = wav.w;
+      ctx.stroke();
+    }
+
+    for (var d = 0; d < dust.length; d++) {
+      var p = dust[d];
+      p.x += p.vx + Math.sin(t + p.tw) * 0.05;
+      p.y += p.vy;
+      p.tw += 0.02;
+      if (p.y < -4) { p.y = H + 4; p.x = Math.random() * W; }
+      if (p.x < -4) p.x = W + 4;
+      if (p.x > W + 4) p.x = -4;
+      var tw = 0.5 + Math.sin(p.tw) * 0.5;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(232, 234, 237,' + (p.a * tw) + ')';
+      ctx.fill();
+    }
+
+    if (Math.random() < 0.012) spawnStreak();
+    for (var s = streaks.length - 1; s >= 0; s--) {
+      var st = streaks[s];
+      st.x += st.vx;
+      st.y += st.vy;
+      st.life -= st.decay;
+      if (st.life <= 0 || st.x < -200 || st.x > W + 200) { streaks.splice(s, 1); continue; }
+      var grad = ctx.createLinearGradient(st.x, st.y, st.x - st.vx * (st.len / 3), st.y - st.vy * (st.len / 3));
+      grad.addColorStop(0, 'rgba(245, 158, 11,' + (0.55 * st.life) + ')');
+      grad.addColorStop(1, 'rgba(245, 158, 11,0)');
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(st.x, st.y);
+      ctx.lineTo(st.x - st.vx * (st.len / 3), st.y - st.vy * (st.len / 3));
+      ctx.stroke();
+    }
+
     raf = requestAnimationFrame(draw);
   }
 
