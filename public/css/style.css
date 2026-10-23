@@ -241,8 +241,42 @@ h1, h2, h3, h4, h5, h6 { letter-spacing: -0.02em; }
   color: #e8eaed;
 }
 .home-body .stage-section {
-  background: transparent;
+  background-color: transparent;
   background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M20 0L40 20L20 40L0 20z' /%3E%3C/g%3E%3C/svg%3E");
+  background-size: 40px 40px;
+  position: relative;
+}
+.home-body .stage-section::before {
+  content: "";
+  position: absolute;
+  inset: -40px;
+  background-image:
+    linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+  background-size: 56px 56px;
+  animation: gridDrift 26s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes gridDrift {
+  from { transform: translate(0, 0); }
+  to { transform: translate(56px, 56px); }
+}
+.home-body .stage-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 340px at 78% 8%, rgba(180,83,9,.13), transparent 62%),
+    radial-gradient(700px 300px at 12% 88%, rgba(37,66,120,.2), transparent 60%);
+  background-size: 200% 200%;
+  animation: auroraShift 18s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes auroraShift {
+  from { background-position: 0% 0%, 100% 100%; }
+  to { background-position: 100% 60%, 0% 40%; }
 }
 .stage-sub { color: #9aa0a6; margin-bottom: 0; }
 .stage-tabs {
@@ -581,6 +615,8 @@ h1, h2, h3, h4, h5, h6 { letter-spacing: -0.02em; }
   .btn-warning::after { display: none; }
   .ticker-track { animation: none; }
   .orb { animation: none; }
+  .home-body .stage-section::before { animation: none; }
+  .home-body .stage-section::after { animation: none; }
   .scroll-progress { transition: none; }
   .navbar { transition: none; }
   .hero-canvas { display: none; }
