@@ -1,0 +1,77 @@
+<%- include('../partials/header') %>
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-lg-2 col-md-3">
+      <%- include('../partials/admin-nav') %>
+    </div>
+    <div class="col-lg-10 col-md-9">
+      <div class="mb-4">
+        <h3 class="fw-bold mb-0">Complaints Management</h3>
+        <p class="text-muted mb-0"><%= complaints.length %> complaint(s)</p>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <form method="GET" action="/admin/complaints" class="row g-2 align-items-end">
+            <div class="col-md-4">
+              <label class="form-label small fw-semibold">Filter by Status</label>
+              <select name="status" class="form-select">
+                <option value="">All Statuses</option>
+                <option value="open" <%= selectedStatus === 'open' ? 'selected' : '' %>>Open</option>
+                <option value="in_progress" <%= selectedStatus === 'in_progress' ? 'selected' : '' %>>In Progress</option>
+                <option value="resolved" <%= selectedStatus === 'resolved' ? 'selected' : '' %>>Resolved</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-primary"><i class="bi bi-funnel me-1"></i>Filter</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <% complaints.forEach(c => { %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+              <div>
+                <h6 class="fw-bold mb-1"><%= c.title %></h6>
+                <div class="small text-muted">
+                  <i class="bi bi-person me-1"></i><%= c.name %> (<%= c.student_code %>, <%= c.class %>)
+                  <span class="mx-2">|</span>
+                  <i class="bi bi-tag me-1"></i><span class="text-capitalize"><%= c.category %></span>
+                  <span class="mx-2">|</span>
+                  <i class="bi bi-calendar me-1"></i><%= c.created_at.slice(0,16) %>
+                </div>
+              </div>
+              <span class="badge badge-<%= c.status %>"><%= c.status.replace('_',' ') %></span>
+            </div>
+            <% if (c.description) { %><p class="mt-2 mb-2 small"><%= c.description %></p><% } %>
+            <% if (c.admin_remark) { %>
+              <div class="alert alert-light py-2 small mb-2"><i class="bi bi-reply me-1"></i><strong>Admin:</strong> <%= c.admin_remark %></div>
+            <% } %>
+            <form method="POST" action="/admin/complaints/<%= c.id %>/update" class="row g-2 mt-1">
+              <div class="col-md-3">
+                <select name="status" class="form-select form-select-sm">
+                  <option value="open" <%= c.status === 'open' ? 'selected' : '' %>>Open</option>
+                  <option value="in_progress" <%= c.status === 'in_progress' ? 'selected' : '' %>>In Progress</option>
+                  <option value="resolved" <%= c.status === 'resolved' ? 'selected' : '' %>>Resolved</option>
+                </select>
+              </div>
+              <div class="col-md-7">
+                <input type="text" name="admin_remark" class="form-control form-control-sm" placeholder="Remark / action taken..." value="<%= c.admin_remark || '' %>">
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-sm btn-primary w-100"><i class="bi bi-check-lg"></i> Update</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+      <% if (!complaints.length) { %><div class="card"><div class="card-body text-center text-muted py-5">No complaints found.</div></div><% } %>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

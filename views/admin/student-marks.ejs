@@ -1,0 +1,78 @@
+<%- include('../partials/header') %>
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-lg-2 col-md-3">
+      <%- include('../partials/admin-nav') %>
+    </div>
+    <div class="col-lg-10 col-md-9">
+      <div class="mb-4">
+        <a href="/admin/students/<%= student.id %>" class="text-decoration-none small"><i class="bi bi-arrow-left me-1"></i>Back to Profile</a>
+        <h3 class="fw-bold mt-2 mb-0">Marks Entry — <%= student.name %></h3>
+        <span class="badge text-bg-dark font-monospace"><%= student.student_code %></span>
+        <span class="badge text-bg-primary"><%= student.class %></span>
+      </div>
+
+      <% if (success) { %><div class="alert alert-success"><i class="bi bi-check-circle me-1"></i>Marks saved successfully.</div><% } %>
+
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="card">
+            <div class="card-header"><i class="bi bi-pencil-square me-2"></i>Enter / Update Marks</div>
+            <div class="card-body">
+              <form method="POST" action="/admin/students/<%= student.id %>/marks">
+                <div class="mb-3">
+                  <label class="form-label fw-semibold">Select Exam</label>
+                  <select name="exam_id" class="form-select" required>
+                    <% exams.forEach(e => { %><option value="<%= e.id %>"><%= e.name %></option><% }) %>
+                  </select>
+                </div>
+                <% subjects.forEach(sub => { %>
+                  <div class="mb-2 row align-items-center">
+                    <label class="col-sm-7 col-form-label"><%= sub %></label>
+                    <div class="col-sm-5">
+                      <input type="number" name="entries[<%= sub %>]" class="form-control" min="0" max="100" placeholder="0-100">
+                    </div>
+                  </div>
+                <% }) %>
+                <button type="submit" class="btn btn-primary w-100 mt-3 fw-semibold"><i class="bi bi-save me-2"></i>Save Marks</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="card">
+            <div class="card-header"><i class="bi bi-table me-2"></i>Recorded Marks</div>
+            <div class="card-body p-0">
+              <% exams.forEach(e => { %>
+                <% const exMarks = marks.filter(m => m.exam_id === e.id); %>
+                <% if (exMarks.length) { %>
+                  <div class="px-3 pt-3 pb-1 fw-semibold"><%= e.name %></div>
+                  <table class="table table-sm mb-3">
+                    <thead class="table-light"><tr><th>Subject</th><th class="text-end">Marks</th><th class="text-end">Out of</th><th class="text-center">Grade</th></tr></thead>
+                    <tbody>
+                      <% exMarks.forEach(m => { %>
+                        <% const g = m.marks_obtained !== null && m.marks_obtained !== undefined ? (function(){ const p=(m.marks_obtained/m.max_marks)*100; if(p>=90)return 'A+'; if(p>=80)return 'A'; if(p>=70)return 'B+'; if(p>=60)return 'B'; if(p>=50)return 'C'; if(p>=40)return 'D'; return 'F'; })() : '—'; %>
+                        <tr>
+                          <td><%= m.subject %></td>
+                          <td class="text-end fw-semibold"><%= m.marks_obtained %></td>
+                          <td class="text-end"><%= m.max_marks %></td>
+                          <td class="text-center"><span class="badge text-bg-<%= g === 'F' ? 'danger' : (String(g).startsWith('A') ? 'success' : 'primary') %>"><%= g %></span></td>
+                        </tr>
+                      <% }) %>
+                    </tbody>
+                  </table>
+                <% } %>
+              <% }) %>
+              <% if (!marks.length) { %><p class="text-center text-muted py-5">No marks recorded yet.</p><% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

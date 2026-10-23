@@ -1,0 +1,27 @@
+<div class="card mb-4 no-print">
+  <div class="card-body p-2">
+    <nav class="nav flex-column sidebar-nav">
+      <a class="nav-link <%= currentPath === '/student/dashboard' ? 'active' : '' %>" href="/student/dashboard">
+        <i class="bi bi-speedometer2 me-2"></i>Dashboard
+      </a>
+      <a class="nav-link <%= currentPath === '/student/profile' ? 'active' : '' %>" href="/student/profile">
+        <i class="bi bi-person-vcard me-2"></i>My Profile
+      </a>
+      <a class="nav-link <%= currentPath === '/student/fees' ? 'active' : '' %>" href="/student/fees">
+        <i class="bi bi-cash-coin me-2"></i>Fee Details
+      </a>
+      <a class="nav-link <%= currentPath === '/student/academics' ? 'active' : '' %>" href="/student/academics">
+        <i class="bi bi-journal-check me-2"></i>Academics
+      </a>
+      <a class="nav-link <%= currentPath === '/student/activities' ? 'active' : '' %>" href="/student/activities">
+        <i class="bi bi-trophy me-2"></i>Activities
+      </a>
+      <a class="nav-link <%= currentPath === '/student/transport' ? 'active' : '' %>" href="/student/transport">
+        <i class="bi bi-bus-front me-2"></i>Transport
+      </a>
+      <a class="nav-link <%= currentPath === '/student/complaints' ? 'active' : '' %>" href="/student/complaints">
+        <i class="bi bi-exclamation-triangle me-2"></i>Complaints
+      </a>
+    </nav>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<%- include('../partials/header') %>
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-lg-2 col-md-3">
+      <%- include('../partials/student-nav') %>
+    </div>
+    <div class="col-lg-10 col-md-9">
+      <div class="mb-4">
+        <h3 class="fw-bold mb-0">Fee Details</h3>
+        <p class="text-muted mb-0">Academic Year <%= fee.academicYear %></p>
+      </div>
+
+      <div class="row g-3 mb-4">
+        <div class="col-md-3">
+          <div class="card stat-card text-center"><div class="card-body">
+            <div class="stat-label">Total Due</div>
+            <div class="stat-value">₹<%= Number(fee.totalDue).toLocaleString('en-IN') %></div>
+          </div></div>
+        </div>
+        <div class="col-md-3">
+          <div class="card stat-card text-center"><div class="card-body">
+            <div class="stat-label">Paid</div>
+            <div class="stat-value text-success">₹<%= Number(fee.totalPaid).toLocaleString('en-IN') %></div>
+          </div></div>
+        </div>
+        <div class="col-md-3">
+          <div class="card stat-card text-center"><div class="card-body">
+            <div class="stat-label">Remaining</div>
+            <div class="stat-value <%= fee.remaining > 0 ? 'text-danger' : 'text-success' %>">₹<%= Number(fee.remaining).toLocaleString('en-IN') %></div>
+          </div></div>
+        </div>
+        <div class="col-md-3">
+          <div class="card text-center"><div class="card-body py-4">
+            <% if (fee.remaining > 0) { %>
+              <span class="badge badge-partial fs-6 px-3 py-2">Payment Pending</span>
+            <% } else { %>
+              <span class="badge badge-paid fs-6 px-3 py-2">Fully Paid</span>
+            <% } %>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-header"><i class="bi bi-list-check me-2"></i>Fee Breakdown</div>
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead class="table-light"><tr><th>Category</th><th class="text-end">Total Due</th><th class="text-end">Paid</th><th class="text-end">Balance</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="fw-semibold">Tuition Fee</td>
+                <td class="text-end">₹<%= fee.tuitionDue.toLocaleString('en-IN') %></td>
+                <td class="text-end">₹<%= fee.tuitionPaid.toLocaleString('en-IN') %></td>
+                <td class="text-end <%= fee.tuitionRemaining > 0 ? 'text-danger fw-bold' : 'text-success' %>">₹<%= fee.tuitionRemaining.toLocaleString('en-IN') %></td>
+                <td><% if (fee.tuitionRemaining <= 0) { %><span class="badge badge-paid">Paid</span><% } else { %><span class="badge badge-partial">Pending</span><% } %></td>
+              </tr>
+              <tr>
+                <td class="fw-semibold">Transport Fee</td>
+                <td class="text-end">₹<%= fee.transportDue.toLocaleString('en-IN') %></td>
+                <td class="text-end">₹<%= fee.transportPaid.toLocaleString('en-IN') %></td>
+                <td class="text-end <%= fee.transportRemaining > 0 ? 'text-danger fw-bold' : 'text-success' %>">₹<%= fee.transportRemaining.toLocaleString('en-IN') %></td>
+                <td><% if (fee.transportDue === 0) { %><span class="text-muted small">N/A</span><% } else if (fee.transportRemaining <= 0) { %><span class="badge badge-paid">Paid</span><% } else { %><span class="badge badge-partial">Pending</span><% } %></td>
+              </tr>
+              <tr>
+                <td class="fw-semibold">Activity Fees</td>
+                <td class="text-end">₹<%= fee.activityDue.toLocaleString('en-IN') %></td>
+                <td class="text-end">₹<%= fee.activityPaid.toLocaleString('en-IN') %></td>
+                <td class="text-end <%= fee.activityRemaining > 0 ? 'text-danger fw-bold' : 'text-success' %>">₹<%= fee.activityRemaining.toLocaleString('en-IN') %></td>
+                <td><% if (fee.activityDue === 0) { %><span class="text-muted small">N/A</span><% } else if (fee.activityRemaining <= 0) { %><span class="badge badge-paid">Paid</span><% } else { %><span class="badge badge-partial">Pending</span><% } %></td>
+              </tr>
+              <tr class="table-light fw-bold">
+                <td>Total</td>
+                <td class="text-end">₹<%= fee.totalDue.toLocaleString('en-IN') %></td>
+                <td class="text-end text-success">₹<%= fee.totalPaid.toLocaleString('en-IN') %></td>
+                <td class="text-end <%= fee.remaining > 0 ? 'text-danger' : 'text-success' %>">₹<%= fee.remaining.toLocaleString('en-IN') %></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><i class="bi bi-receipt me-2"></i>Payment History</div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead class="table-light"><tr><th>Receipt No.</th><th>Date</th><th>Category</th><th>Mode</th><th class="text-end">Amount</th></tr></thead>
+              <tbody>
+                <% payments.forEach(p => { %>
+                  <tr>
+                    <td class="font-monospace small"><%= p.receipt_no || '—' %></td>
+                    <td><%= p.payment_date %></td>
+                    <td><%= p.category %><% if (p.activity_name) { %><div class="small text-muted"><%= p.activity_name %></div><% } %></td>
+                    <td class="text-capitalize"><%= p.mode %></td>
+                    <td class="text-end fw-semibold">₹<%= Number(p.amount).toLocaleString('en-IN') %></td>
+                  </tr>
+                <% }) %>
+                <% if (!payments.length) { %><tr><td colspan="5" class="text-center text-muted py-4">No payments recorded yet.</td></tr><% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,61 @@
+<%- include('../partials/header') %>
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-lg-2 col-md-3">
+      <%- include('../partials/student-nav') %>
+    </div>
+    <div class="col-lg-10 col-md-9">
+      <div class="mb-4">
+        <h3 class="fw-bold mb-0">My Activities</h3>
+        <p class="text-muted mb-0">Sports, dance, music and other enrollments</p>
+      </div>
+
+      <% if (enrolled.length) { %>
+        <div class="row g-4">
+          <% enrolled.forEach(a => { %>
+            <div class="col-md-6 col-xl-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5 class="fw-bold mb-0"><%= a.name %></h5>
+                    <i class="bi bi-trophy text-warning" style="font-size: 1.6rem;"></i>
+                  </div>
+                  <p class="small text-muted"><%= a.description || '' %></p>
+                  <hr>
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <div class="small text-muted">Fee</div>
+                      <div class="fw-bold">₹<%= a.fee %></div>
+                    </div>
+                    <div class="text-end">
+                      <div class="small text-muted">Paid</div>
+                      <div class="fw-bold <%= a.paid >= a.fee ? 'text-success' : 'text-danger' %>">₹<%= a.paid %></div>
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <% if (a.paid >= a.fee) { %><span class="badge badge-paid">Fee Paid</span>
+                    <% } else if (a.paid > 0) { %><span class="badge badge-partial">Partially Paid</span>
+                    <% } else { %><span class="badge badge-due">Fee Pending</span><% } %>
+                  </div>
+                  <div class="small text-muted mt-2">Enrolled on: <%= a.enrolled_date %></div>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <div class="card">
+          <div class="card-body text-center text-muted py-5">
+            <i class="bi bi-trophy fs-1"></i>
+            <p class="mt-2 mb-0">You are not enrolled in any extra activities.</p>
+            <p class="small mb-0">Contact the school office to enroll in Sports, Dance, Music or Art.</p>
+          </div>
+        </div>
+      <% } %>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

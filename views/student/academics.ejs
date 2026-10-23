@@ -1,0 +1,96 @@
+<%- include('../partials/header') %>
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-lg-2 col-md-3">
+      <%- include('../partials/student-nav') %>
+    </div>
+    <div class="col-lg-10 col-md-9">
+      <div class="mb-4">
+        <h3 class="fw-bold mb-0">Academic Performance</h3>
+        <p class="text-muted mb-0">Your exam results and grades</p>
+      </div>
+
+      <% if (overall) { %>
+        <div class="row g-3 mb-4">
+          <div class="col-md-3">
+            <div class="card stat-card text-center"><div class="card-body">
+              <div class="stat-label">Overall Marks</div>
+              <div class="stat-value"><%= overall.total %>/<%= overall.max %></div>
+            </div></div>
+          </div>
+          <div class="col-md-3">
+            <div class="card stat-card text-center"><div class="card-body">
+              <div class="stat-label">Average %</div>
+              <div class="stat-value"><%= overall.pct %>%</div>
+            </div></div>
+          </div>
+          <div class="col-md-3">
+            <div class="card stat-card text-center"><div class="card-body">
+              <div class="stat-label">Overall Grade</div>
+              <div class="stat-value">
+                <span class="badge fs-4 text-bg-<%= overall.grade === 'F' ? 'danger' : (overall.grade.startsWith('A') ? 'success' : 'primary') %>"><%= overall.grade %></span>
+              </div>
+            </div></div>
+          </div>
+          <div class="col-md-3">
+            <div class="card"><div class="card-body text-center py-4">
+              <div class="small text-muted">Performance</div>
+              <div class="fw-bold fs-5 mt-1">
+                <% const p = Number(overall.pct); %>
+                <% if (p >= 80) { %><i class="bi bi-emoji-smile text-success me-1"></i>Excellent<% } %>
+                <% if (p >= 60 && p < 80) { %><i class="bi bi-emoji-neutral text-warning me-1"></i>Good<% } %>
+                <% if (p < 60) { %><i class="bi bi-emoji-frown text-danger me-1"></i>Needs Improvement<% } %>
+              </div>
+            </div></div>
+          </div>
+        </div>
+      <% } %>
+
+      <% examReports.forEach(r => { %>
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-journal-text me-2"></i><%= r.exam.name %></span>
+            <% if (r.grade) { %>
+              <span>
+                <span class="badge text-bg-<%= r.grade === 'F' ? 'danger' : (r.grade.startsWith('A') ? 'success' : 'primary') %> me-1"><%= r.grade %></span>
+                <span class="small text-muted"><%= r.total %> marks (<%= r.pct %>%)<% if (r.rank) { %> · Rank #<%= r.rank %><% } %></span>
+              </span>
+            <% } %>
+          </div>
+          <% if (r.subjects.length) { %>
+            <div class="table-responsive">
+              <table class="table mb-0">
+                <thead class="table-light"><tr><th>Subject</th><th class="text-end">Marks Obtained</th><th class="text-end">Max Marks</th><th class="text-center">Grade</th></tr></thead>
+                <tbody>
+                  <% r.subjects.forEach(m => { %>
+                    <% const p = (m.marks_obtained / m.max_marks) * 100; %>
+                    <% let g = 'F'; if (p>=90) g='A+'; else if (p>=80) g='A'; else if (p>=70) g='B+'; else if (p>=60) g='B'; else if (p>=50) g='C'; else if (p>=40) g='D'; %>
+                    <tr>
+                      <td class="fw-semibold"><%= m.subject %></td>
+                      <td class="text-end"><%= m.marks_obtained %></td>
+                      <td class="text-end"><%= m.max_marks %></td>
+                      <td class="text-center"><span class="badge text-bg-<%= g === 'F' ? 'danger' : (g.startsWith('A') ? 'success' : 'primary') %>"><%= g %></span></td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          <% } else { %>
+            <p class="text-center text-muted py-4 mb-0">Marks not yet published for this exam.</p>
+          <% } %>
+        </div>
+      <% }) %>
+
+      <% if (!examReports.some(r => r.subjects.length)) { %>
+        <div class="card"><div class="card-body text-center text-muted py-5">
+          <i class="bi bi-journal-x fs-1"></i>
+          <p class="mt-2 mb-0">No exam results available yet.</p>
+        </div></div>
+      <% } %>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

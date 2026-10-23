@@ -1,0 +1,141 @@
+<%- include('../partials/header') %>
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-lg-2 col-md-3">
+      <%- include('../partials/admin-nav') %>
+    </div>
+    <div class="col-lg-10 col-md-9">
+      <div class="mb-4">
+        <a href="/admin/students" class="text-decoration-none small"><i class="bi bi-arrow-left me-1"></i>Back to Students</a>
+        <h3 class="fw-bold mt-2 mb-0"><%= student && student.id ? 'Edit Student' : 'Add New Student' %></h3>
+      </div>
+
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-danger"><%= error %></div>
+      <% } %>
+
+      <form method="POST" action="<%= student && student.id ? '/admin/students/' + student.id + '/edit' : '/admin/students/new' %>">
+        <div class="card mb-4">
+          <div class="card-header"><i class="bi bi-person-vcard me-2"></i>Personal Details</div>
+          <div class="card-body row g-3">
+            <% if (nextCode) { %>
+              <div class="col-12">
+                <label class="form-label">Student ID (auto-generated)</label>
+                <input type="text" class="form-control font-monospace bg-light" value="<%= nextCode %>" disabled>
+              </div>
+            <% } else { %>
+              <div class="col-12">
+                <label class="form-label">Student ID</label>
+                <input type="text" class="form-control font-monospace bg-light" value="<%= student.student_code %>" disabled>
+              </div>
+            <% } %>
+            <div class="col-md-6">
+              <label class="form-label">Full Name *</label>
+              <input type="text" name="name" class="form-control" value="<%= student ? student.name : '' %>" required>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Date of Birth</label>
+              <input type="date" name="dob" class="form-control" value="<%= student ? student.dob || '' : '' %>">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Gender</label>
+              <select name="gender" class="form-select">
+                <option value="">Select</option>
+                <option value="Male" <%= student && student.gender === 'Male' ? 'selected' : '' %>>Male</option>
+                <option value="Female" <%= student && student.gender === 'Female' ? 'selected' : '' %>>Female</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Class *</label>
+              <select name="class" class="form-select" required>
+                <option value="">Select Class</option>
+                <% classes.forEach(c => { %>
+                  <option value="<%= c %>" <%= student && student.class === c ? 'selected' : '' %>><%= c %></option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Section</label>
+              <input type="text" name="section" class="form-control" value="<%= student ? student.section || 'A' : 'A' %>">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Admission Date</label>
+              <input type="date" name="admission_date" class="form-control" value="<%= student ? student.admission_date || '' : '' %>">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Blood Group</label>
+              <select name="blood_group" class="form-select">
+                <option value="">Select</option>
+                <% ['A+','A-','B+','B-','O+','O-','AB+','AB-'].forEach(bg => { %>
+                  <option value="<%= bg %>" <%= student && student.blood_group === bg ? 'selected' : '' %>><%= bg %></option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Address</label>
+              <textarea name="address" class="form-control" rows="2"><%= student ? student.address || '' : '' %></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-header"><i class="bi bi-people me-2"></i>Parent &amp; Guardian Contact</div>
+          <div class="card-body row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Parent Name</label>
+              <input type="text" name="parent_name" class="form-control" value="<%= student ? student.parent_name || '' : '' %>">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Parent Phone Number *</label>
+              <input type="tel" name="parent_phone" class="form-control" pattern="[0-9]{10}" title="10-digit phone number" value="<%= student ? student.parent_phone || '' : '' %>">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Guardian Name</label>
+              <input type="text" name="guardian_name" class="form-control" value="<%= student ? student.guardian_name || '' : '' %>">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Guardian Phone Number *</label>
+              <input type="tel" name="guardian_phone" class="form-control" pattern="[0-9]{10}" title="10-digit phone number" value="<%= student ? student.guardian_phone || '' : '' %>">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="email" name="email" class="form-control" value="<%= student ? student.email || '' : '' %>">
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-header"><i class="bi bi-bus-front me-2"></i>Transport Details</div>
+          <div class="card-body row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Bus Route</label>
+              <select name="transport_route_id" class="form-select">
+                <option value="">No Transport</option>
+                <% routes.forEach(r => { %>
+                  <option value="<%= r.id %>" <%= student && student.transport_route_id == r.id ? 'selected' : '' %>>
+                    <%= r.route_name %> (₹<%= r.monthly_fee %>/month)
+                  </option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Pickup Point</label>
+              <input type="text" name="pickup_point" class="form-control" value="<%= student ? student.pickup_point || '' : '' %>">
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary px-4 fw-semibold">
+            <i class="bi bi-check-circle me-2"></i><%= student && student.id ? 'Update Student' : 'Create Student' %>
+          </button>
+          <a href="/admin/students" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,245 @@
+<%- include('../partials/header') %>
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-lg-2 col-md-3">
+      <%- include('../partials/admin-nav') %>
+    </div>
+    <div class="col-lg-10 col-md-9">
+      <div class="d-flex justify-content-between align-items-start mb-4 flex-wrap gap-2">
+        <div>
+          <a href="/admin/students" class="text-decoration-none small"><i class="bi bi-arrow-left me-1"></i>Back to Students</a>
+          <h3 class="fw-bold mt-2 mb-0"><%= student.name %></h3>
+          <span class="badge text-bg-dark font-monospace"><%= student.student_code %></span>
+          <span class="badge text-bg-primary"><%= student.class %> - <%= student.section %></span>
+          <% if (!student.active) { %><span class="badge text-bg-danger">Inactive</span><% } %>
+        </div>
+        <div class="d-flex gap-2">
+          <a href="/admin/students/<%= student.id %>/fees" class="btn btn-success"><i class="bi bi-cash me-1"></i>Fees</a>
+          <a href="/admin/students/<%= student.id %>/marks" class="btn btn-info"><i class="bi bi-journal-check me-1"></i>Marks</a>
+          <a href="/admin/students/<%= student.id %>/edit" class="btn btn-outline-primary"><i class="bi bi-pencil me-1"></i>Edit</a>
+          <form method="POST" action="/admin/students/<%= student.id %>/delete" onsubmit="return confirm('Mark this student inactive?')">
+            <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash me-1"></i></button>
+          </form>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+              <div class="avatar-circle mx-auto mb-3"><%= student.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase() %></div>
+              <h5 class="fw-bold mb-0"><%= student.name %></h5>
+              <p class="text-muted small mb-1"><%= student.class %> · <%= student.student_code %></p>
+              <% if (student.blood_group) { %><span class="badge text-bg-danger"><%= student.blood_group %></span><% } %>
+              <% if (student.gender) { %><span class="badge text-bg-secondary"><%= student.gender %></span><% } %>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-header"><i class="bi bi-person-lines-fill me-2"></i>Personal Details</div>
+            <div class="card-body">
+              <dl class="detail-grid mb-0">
+                <dt>Date of Birth</dt><dd><%= student.dob || '—' %></dd>
+                <dt>Admission Date</dt><dd><%= student.admission_date || '—' %></dd>
+                <dt>Address</dt><dd><%= student.address || '—' %></dd>
+                <dt>Email</dt><dd><%= student.email || '—' %></dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-header"><i class="bi bi-telephone me-2"></i>Parent &amp; Guardian</div>
+            <div class="card-body">
+              <dl class="detail-grid mb-0">
+                <dt>Parent Name</dt><dd><%= student.parent_name || '—' %></dd>
+                <dt>Parent Phone</dt><dd><a href="tel:<%= student.parent_phone %>" class="text-decoration-none"><%= student.parent_phone || '—' %></a></dd>
+                <dt>Guardian Name</dt><dd><%= student.guardian_name || '—' %></dd>
+                <dt>Guardian Phone</dt><dd><a href="tel:<%= student.guardian_phone %>" class="text-decoration-none"><%= student.guardian_phone || '—' %></a></dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><i class="bi bi-bus-front me-2"></i>Transport</div>
+            <div class="card-body">
+              <% if (student.transport_route_id) { %>
+                <dl class="detail-grid mb-0">
+                  <dt>Route</dt><dd><%= student.route_name %></dd>
+                  <dt>Stops</dt><dd class="small"><%= student.stops || '—' %></dd>
+                  <dt>Pickup Point</dt><dd><%= student.pickup_point || '—' %></dd>
+                  <dt>Monthly Fee</dt><dd>₹<%= student.monthly_fee %></dd>
+                </dl>
+              <% } else { %>
+                <p class="text-muted mb-0">Not enrolled in transport.</p>
+              <% } %>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <span><i class="bi bi-wallet2 me-2"></i>Fee Summary — AY <%= fee.academicYear %></span>
+              <a href="/admin/students/<%= student.id %>/fees" class="btn btn-sm btn-success"><i class="bi bi-plus-circle me-1"></i>Record Payment</a>
+            </div>
+            <div class="card-body">
+              <div class="row g-3 text-center">
+                <div class="col">
+                  <div class="small text-muted">Total Due</div>
+                  <div class="fw-bold fs-5">₹<%= Number(fee.totalDue).toLocaleString('en-IN') %></div>
+                </div>
+                <div class="col">
+                  <div class="small text-muted">Paid</div>
+                  <div class="fw-bold fs-5 text-success">₹<%= Number(fee.totalPaid).toLocaleString('en-IN') %></div>
+                </div>
+                <div class="col">
+                  <div class="small text-muted">Remaining</div>
+                  <div class="fw-bold fs-5 <%= fee.remaining > 0 ? 'text-danger' : 'text-success' %>">₹<%= Number(fee.remaining).toLocaleString('en-IN') %></div>
+                </div>
+              </div>
+              <div class="progress progress-thin mt-3">
+                <% const pct = fee.totalDue ? Math.min(100, (fee.totalPaid / fee.totalDue) * 100) : 100; %>
+                <div class="progress-bar <%= fee.remaining > 0 ? 'bg-warning' : 'bg-success' %>" style="width: <%= pct %>%"></div>
+              </div>
+              <div class="table-responsive mt-3">
+                <table class="table table-sm mb-0">
+                  <thead class="table-light"><tr><th>Category</th><th class="text-end">Due</th><th class="text-end">Paid</th><th class="text-end">Balance</th></tr></thead>
+                  <tbody>
+                    <tr><td>Tuition</td><td class="text-end">₹<%= fee.tuitionDue.toLocaleString('en-IN') %></td><td class="text-end">₹<%= fee.tuitionPaid.toLocaleString('en-IN') %></td><td class="text-end <%= fee.tuitionRemaining > 0 ? 'text-danger fw-semibold' : 'text-success' %>">₹<%= fee.tuitionRemaining.toLocaleString('en-IN') %></td></tr>
+                    <tr><td>Transport</td><td class="text-end">₹<%= fee.transportDue.toLocaleString('en-IN') %></td><td class="text-end">₹<%= fee.transportPaid.toLocaleString('en-IN') %></td><td class="text-end <%= fee.transportRemaining > 0 ? 'text-danger fw-semibold' : 'text-success' %>">₹<%= fee.transportRemaining.toLocaleString('en-IN') %></td></tr>
+                    <tr><td>Activities</td><td class="text-end">₹<%= fee.activityDue.toLocaleString('en-IN') %></td><td class="text-end">₹<%= fee.activityPaid.toLocaleString('en-IN') %></td><td class="text-end <%= fee.activityRemaining > 0 ? 'text-danger fw-semibold' : 'text-success' %>">₹<%= fee.activityRemaining.toLocaleString('en-IN') %></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <span><i class="bi bi-journal-check me-2"></i>Academic Performance</span>
+            </div>
+            <div class="card-body p-0">
+              <table class="table mb-0">
+                <thead class="table-light"><tr><th>Exam</th><th class="text-center">Average %</th><th class="text-center">Grade</th></tr></thead>
+                <tbody>
+                  <% examStats.forEach(e => { %>
+                    <tr>
+                      <td><%= e.name %></td>
+                      <td class="text-center"><%= e.avg !== null ? e.avg + '%' : '—' %></td>
+                      <td class="text-center">
+                        <% if (e.grade) { %><span class="badge text-bg-<%= e.grade === 'F' ? 'danger' : (e.grade.startsWith('A') ? 'success' : 'primary') %>"><%= e.grade %></span><% } else { %>—<% } %>
+                      </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-header"><i class="bi bi-trophy me-2"></i>Extra Activities</div>
+            <div class="card-body">
+              <% if (enrolled.length) { %>
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                  <% enrolled.forEach(a => { %>
+                    <span class="badge text-bg-warning fs-6"><%= a.name %> — ₹<%= a.fee %></span>
+                  <% }) %>
+                </div>
+              <% } %>
+              <form method="POST" action="/admin/students/<%= student.id %>/activities" class="row g-2">
+                <div class="col-md-8">
+                  <select name="activity_id" class="form-select form-select-sm">
+                    <option value="">Select activity to enroll...</option>
+                    <% activities.forEach(a => { %>
+                      <option value="<%= a.id %>"><%= a.name %> (₹<%= a.fee %>)</option>
+                    <% }) %>
+                  </select>
+                </div>
+                <div class="col-md-4"><button class="btn btn-sm btn-primary w-100"><i class="bi bi-plus-circle me-1"></i>Enroll</button></div>
+              </form>
+              <% if (enrolled.length) { %>
+                <div class="table-responsive mt-3">
+                  <table class="table table-sm mb-0">
+                    <thead class="table-light"><tr><th>Activity</th><th class="text-end">Fee</th><th>Enrolled</th><th></th></tr></thead>
+                    <tbody>
+                      <% enrolled.forEach(a => { %>
+                        <tr>
+                          <td><%= a.name %></td>
+                          <td class="text-end">₹<%= a.fee %></td>
+                          <td><%= a.enrolled_date %></td>
+                          <td class="text-end">
+                            <form method="POST" action="/admin/students/<%= student.id %>/activities/<%= a.activity_id %>/remove" class="d-inline" onsubmit="return confirm('Remove enrollment?')">
+                              <button class="btn btn-sm btn-outline-danger py-0"><i class="bi bi-x"></i></button>
+                            </form>
+                          </td>
+                        </tr>
+                      <% }) %>
+                    </tbody>
+                  </table>
+                </div>
+              <% } %>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <span><i class="bi bi-receipt me-2"></i>Payment History</span>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead class="table-light"><tr><th>Receipt</th><th>Date</th><th>Category</th><th>Mode</th><th class="text-end">Amount</th></tr></thead>
+                  <tbody>
+                    <% payments.forEach(p => { %>
+                      <tr>
+                        <td class="font-monospace small"><%= p.receipt_no || '—' %></td>
+                        <td><%= p.payment_date %></td>
+                        <td><%= p.category %><% if (p.activity_name) { %> <span class="text-muted small">(<%= p.activity_name %>)</span><% } %></td>
+                        <td class="text-capitalize"><%= p.mode %></td>
+                        <td class="text-end fw-semibold">₹<%= Number(p.amount).toLocaleString('en-IN') %></td>
+                      </tr>
+                    <% }) %>
+                    <% if (!payments.length) { %><tr><td colspan="5" class="text-center text-muted py-3">No payments recorded</td></tr><% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <span><i class="bi bi-exclamation-triangle me-2"></i>Complaints (<%= complaints.length %>)</span>
+              <a href="/admin/complaints" class="small text-decoration-none">Manage all</a>
+            </div>
+            <div class="card-body p-0">
+              <% if (complaints.length) { %>
+                <div class="table-responsive">
+                  <table class="table mb-0">
+                    <thead class="table-light"><tr><th>Title</th><th>Category</th><th>Status</th><th>Date</th></tr></thead>
+                    <tbody>
+                      <% complaints.forEach(c => { %>
+                        <tr>
+                          <td><%= c.title %><% if (c.description) { %><div class="small text-muted"><%= c.description %></div><% } %></td>
+                          <td class="text-capitalize"><%= c.category %></td>
+                          <td><span class="badge badge-<%= c.status %>"><%= c.status.replace('_',' ') %></span></td>
+                          <td class="small"><%= c.created_at.slice(0,10) %></td>
+                        </tr>
+                      <% }) %>
+                    </tbody>
+                  </table>
+                </div>
+              <% } else { %>
+                <p class="text-muted text-center py-3 mb-0">No complaints recorded.</p>
+              <% } %>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

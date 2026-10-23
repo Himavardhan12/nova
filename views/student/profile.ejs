@@ -1,0 +1,73 @@
+<%- include('../partials/header') %>
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-lg-2 col-md-3">
+      <%- include('../partials/student-nav') %>
+    </div>
+    <div class="col-lg-10 col-md-9">
+      <div class="mb-4">
+        <h3 class="fw-bold mb-0">My Profile</h3>
+        <p class="text-muted mb-0">Your personal and contact information</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="card text-center">
+            <div class="card-body">
+              <div class="avatar-circle mx-auto mb-3"><%= student.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase() %></div>
+              <h5 class="fw-bold mb-0"><%= student.name %></h5>
+              <p class="text-muted small mb-2"><%= student.class %> · <%= student.section %></p>
+              <span class="badge text-bg-dark font-monospace"><%= student.student_code %></span>
+              <% if (student.blood_group) { %><span class="badge text-bg-danger ms-1"><%= student.blood_group %></span><% } %>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-header"><i class="bi bi-person-lines-fill me-2"></i>Personal Details</div>
+            <div class="card-body">
+              <dl class="detail-grid row mb-0">
+                <dt class="col-sm-4">Full Name</dt><dd class="col-sm-8"><%= student.name %></dd>
+                <dt class="col-sm-4">Student ID</dt><dd class="col-sm-8 font-monospace"><%= student.student_code %></dd>
+                <dt class="col-sm-4">Date of Birth</dt><dd class="col-sm-8"><%= student.dob || '—' %></dd>
+                <dt class="col-sm-4">Gender</dt><dd class="col-sm-8"><%= student.gender || '—' %></dd>
+                <dt class="col-sm-4">Class</dt><dd class="col-sm-8"><%= student.class %> - <%= student.section %></dd>
+                <dt class="col-sm-4">Admission Date</dt><dd class="col-sm-8"><%= student.admission_date || '—' %></dd>
+                <dt class="col-sm-4">Blood Group</dt><dd class="col-sm-8"><%= student.blood_group || '—' %></dd>
+                <dt class="col-sm-4">Email</dt><dd class="col-sm-8"><%= student.email || '—' %></dd>
+                <dt class="col-sm-4">Address</dt><dd class="col-sm-8"><%= student.address || '—' %></dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><i class="bi bi-telephone me-2"></i>Parent &amp; Guardian Contact</div>
+            <div class="card-body">
+              <dl class="detail-grid row mb-0">
+                <dt class="col-sm-4">Parent Name</dt><dd class="col-sm-8"><%= student.parent_name || '—' %></dd>
+                <dt class="col-sm-4">Parent Phone</dt>
+                <dd class="col-sm-8">
+                  <% if (student.parent_phone) { %>
+                    <a href="tel:<%= student.parent_phone %>" class="text-decoration-none fw-bold"><i class="bi bi-telephone-fill text-success me-1"></i><%= student.parent_phone %></a>
+                  <% } else { %>—<% } %>
+                </dd>
+                <dt class="col-sm-4">Guardian Name</dt><dd class="col-sm-8"><%= student.guardian_name || '—' %></dd>
+                <dt class="col-sm-4">Guardian Phone</dt>
+                <dd class="col-sm-8">
+                  <% if (student.guardian_phone) { %>
+                    <a href="tel:<%= student.guardian_phone %>" class="text-decoration-none fw-bold"><i class="bi bi-telephone-fill text-primary me-1"></i><%= student.guardian_phone %></a>
+                  <% } else { %>—<% } %>
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

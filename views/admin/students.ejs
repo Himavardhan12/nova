@@ -1,0 +1,90 @@
+<%- include('../partials/header') %>
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-lg-2 col-md-3">
+      <%- include('../partials/admin-nav') %>
+    </div>
+    <div class="col-lg-10 col-md-9">
+      <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+          <h3 class="fw-bold mb-0">Students</h3>
+          <p class="text-muted mb-0"><%= students.length %> student(s) found</p>
+        </div>
+        <a href="/admin/students/new" class="btn btn-primary"><i class="bi bi-person-plus me-2"></i>Add Student</a>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <form method="GET" action="/admin/students" class="row g-2 align-items-end">
+            <div class="col-md-5">
+              <label class="form-label small fw-semibold">Search</label>
+              <input type="text" name="q" value="<%= q %>" class="form-control" placeholder="Name, ID or parent phone...">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-semibold">Class</label>
+              <select name="class" class="form-select">
+                <option value="">All Classes</option>
+                <% classes.forEach(c => { %>
+                  <option value="<%= c %>" <%= selectedClass === c ? 'selected' : '' %>><%= c %></option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="col-md-3 d-flex gap-2">
+              <button type="submit" class="btn btn-primary flex-grow-1"><i class="bi bi-search me-1"></i>Filter</button>
+              <a href="/admin/students" class="btn btn-outline-secondary">Reset</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Class</th>
+                <th>Parent</th>
+                <th>Parent Phone</th>
+                <th>Transport</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% students.forEach(s => { %>
+                <tr>
+                  <td><span class="badge text-bg-dark font-monospace"><%= s.student_code %></span></td>
+                  <td class="fw-semibold"><%= s.name %></td>
+                  <td><%= s.class %> - <%= s.section %></td>
+                  <td><%= s.parent_name || '—' %></td>
+                  <td><%= s.parent_phone || '—' %></td>
+                  <td>
+                    <% if (s.transport_route_id) { %>
+                      <span class="badge text-bg-success">Yes</span>
+                    <% } else { %>
+                      <span class="badge text-bg-secondary">No</span>
+                    <% } %>
+                  </td>
+                  <td class="text-end">
+                    <a href="/admin/students/<%= s.id %>" class="btn btn-sm btn-outline-primary" title="View Profile"><i class="bi bi-eye"></i></a>
+                    <a href="/admin/students/<%= s.id %>/fees" class="btn btn-sm btn-outline-success" title="Fees"><i class="bi bi-cash"></i></a>
+                    <a href="/admin/students/<%= s.id %>/marks" class="btn btn-sm btn-outline-info" title="Marks"><i class="bi bi-journal-check"></i></a>
+                    <a href="/admin/students/<%= s.id %>/edit" class="btn btn-sm btn-outline-secondary" title="Edit"><i class="bi bi-pencil"></i></a>
+                  </td>
+                </tr>
+              <% }) %>
+              <% if (!students.length) { %>
+                <tr><td colspan="7" class="text-center text-muted py-5">No students found.</td></tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

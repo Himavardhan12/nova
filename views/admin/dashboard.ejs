@@ -1,0 +1,132 @@
+<%- include('../partials/header') %>
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-lg-2 col-md-3">
+      <%- include('../partials/admin-nav') %>
+    </div>
+    <div class="col-lg-10 col-md-9">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h3 class="fw-bold mb-0">Admin Dashboard</h3>
+          <p class="text-muted mb-0">Academic Year 2025-26</p>
+        </div>
+        <a href="/admin/students/new" class="btn btn-primary"><i class="bi bi-person-plus me-2"></i>Add Student</a>
+      </div>
+
+      <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-xl-3">
+          <div class="card stat-card h-100">
+            <div class="card-body">
+              <div class="stat-label">Total Students</div>
+              <div class="stat-value"><%= stats.totalStudents %></div>
+              <i class="bi bi-people text-primary" style="font-size:2rem; opacity:.25; position:absolute; right:1rem; bottom:.75rem;"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="card stat-card h-100">
+            <div class="card-body">
+              <div class="stat-label">Fees Collected</div>
+              <div class="stat-value">₹<%= Number(stats.totalCollected).toLocaleString('en-IN') %></div>
+              <i class="bi bi-cash-coin text-success" style="font-size:2rem; opacity:.25; position:absolute; right:1rem; bottom:.75rem;"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="card stat-card h-100">
+            <div class="card-body">
+              <div class="stat-label">Open Complaints</div>
+              <div class="stat-value"><%= stats.openComplaints %></div>
+              <small class="text-muted">of <%= stats.totalComplaints %> total</small>
+              <i class="bi bi-exclamation-triangle text-warning" style="font-size:2rem; opacity:.25; position:absolute; right:1rem; bottom:.75rem;"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="card stat-card h-100">
+            <div class="card-body">
+              <div class="stat-label">Classes</div>
+              <div class="stat-value"><%= stats.byClass.length %></div>
+              <small class="text-muted">Nursery to SSLC</small>
+              <i class="bi bi-building text-info" style="font-size:2rem; opacity:.25; position:absolute; right:1rem; bottom:.75rem;"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <span><i class="bi bi-clock-history me-2"></i>Recent Payments</span>
+              <a href="/admin/fees" class="small text-decoration-none">View all</a>
+            </div>
+            <div class="card-body p-0">
+              <table class="table mb-0">
+                <tbody>
+                  <% stats.recentPayments.forEach(p => { %>
+                    <tr>
+                      <td>
+                        <a href="/admin/students/<%= p.student_id %>" class="text-decoration-none fw-semibold"><%= p.name %></a>
+                        <div class="small text-muted"><%= p.student_code %> · <%= p.category %></div>
+                      </td>
+                      <td class="text-end">₹<%= Number(p.amount).toLocaleString('en-IN') %></td>
+                    </tr>
+                  <% }) %>
+                  <% if (!stats.recentPayments.length) { %>
+                    <tr><td class="text-center text-muted py-4">No payments yet</td></tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <span><i class="bi bi-exclamation-circle me-2"></i>Latest Complaints</span>
+              <a href="/admin/complaints" class="small text-decoration-none">View all</a>
+            </div>
+            <div class="card-body p-0">
+              <table class="table mb-0">
+                <tbody>
+                  <% stats.recentComplaints.forEach(c => { %>
+                    <tr>
+                      <td>
+                        <div class="fw-semibold small"><%= c.title %></div>
+                        <div class="small text-muted"><%= c.name %> (<%= c.student_code %>)</div>
+                      </td>
+                      <td class="text-end"><span class="badge badge-<%= c.status %>"><%= c.status.replace('_',' ') %></span></td>
+                    </tr>
+                  <% }) %>
+                  <% if (!stats.recentComplaints.length) { %>
+                    <tr><td class="text-center text-muted py-4">No complaints</td></tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="card h-100">
+            <div class="card-header"><i class="bi bi-bar-chart me-2"></i>Students by Class</div>
+            <div class="card-body" style="max-height: 320px; overflow-y: auto;">
+              <% stats.byClass.forEach(bc => { %>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="small"><%= bc.class %></span>
+                  <span class="badge text-bg-primary"><%= bc.c %></span>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
