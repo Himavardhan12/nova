@@ -4,12 +4,12 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8">
-        <h1 class="mb-3">Student records, fees and exam results for Nursery through Class 10</h1>
-        <p class="lead mb-4">
+        <h1 class="mb-3 hero-reveal">Student records, fees and exam results for Nursery through Class 10</h1>
+        <p class="lead mb-4 hero-reveal">
           This portal is used by Sunrise Public School staff, students and parents to manage
           and view admission details, fee payments, marks, bus routes and complaints.
         </p>
-        <a href="/login" class="btn btn-warning btn-lg px-4 fw-semibold">Sign in to the portal</a>
+        <div class="hero-reveal"><a href="/login" class="btn btn-warning btn-lg px-4 fw-semibold">Sign in to the portal</a></div>
       </div>
     </div>
   </div>
@@ -17,12 +17,12 @@
 
 <section class="stage-section" id="classes">
   <div class="container py-5">
-    <div class="mb-4">
+    <div class="mb-4 reveal">
       <h2 class="fw-bold text-white">Classes covered</h2>
       <p class="stage-sub">One student record system from entry level through the secondary board year.</p>
     </div>
 
-    <div class="stage-tabs" role="tablist">
+    <div class="stage-tabs reveal" role="tablist" data-delay="100">
       <button class="stage-btn" data-tabbtn="stage-group" onclick="showTab('stage-group','stage-early', this)">Early Years</button>
       <button class="stage-btn" data-tabbtn="stage-group" onclick="showTab('stage-group','stage-primary', this)">Primary</button>
       <button class="stage-btn" data-tabbtn="stage-group" onclick="showTab('stage-group','stage-middle', this)">Middle School</button>
@@ -96,7 +96,7 @@
       <p class="stage-sub">Annual fee structure, bus routes with stops and monthly charges, and optional activity programs.</p>
     </div>
 
-    <div class="stage-tabs" role="tablist">
+    <div class="stage-tabs reveal" role="tablist" data-delay="100">
       <button class="stage-btn" data-tabbtn="fees-group" onclick="showTab('fees-group','fee-tuition', this)">Fee Structure</button>
       <button class="stage-btn" data-tabbtn="fees-group" onclick="showTab('fees-group','fee-transport', this)">Transport Routes</button>
       <button class="stage-btn" data-tabbtn="fees-group" onclick="showTab('fees-group','fee-sports', this)">Sports and Activities</button>
@@ -167,14 +167,14 @@
 
 <section class="stage-section" id="about">
   <div class="container py-5">
-    <div class="mb-4">
+    <div class="mb-4 reveal">
       <h2 class="fw-bold text-white">About the school</h2>
       <p class="stage-sub">Sunrise Public School, established 1985, affiliated to the Karnataka State Board.</p>
     </div>
 
     <div class="row g-4">
       <div class="col-lg-6">
-        <div class="about-panel">
+        <div class="about-panel reveal-left" data-delay="80">
           <h3>School overview</h3>
           <div class="stage-meta">
             <div class="stage-meta-item">
@@ -206,18 +206,18 @@
       </div>
 
       <div class="col-lg-6">
-        <div class="about-panel">
+        <div class="about-panel reveal-right" data-delay="160">
           <h3>Enrollment growth</h3>
           <p class="chart-caption">Total students on roll, academic years 2019-20 to 2025-26</p>
           <div class="bar-chart">
-            <div class="bar-col"><div class="bar" style="height: 50%"></div><span class="bar-val">620</span><span class="bar-year">19-20</span></div>
-            <div class="bar-col"><div class="bar" style="height: 55%"></div><span class="bar-val">680</span><span class="bar-year">20-21</span></div>
-            <div class="bar-col"><div class="bar" style="height: 60%"></div><span class="bar-val">750</span><span class="bar-year">21-22</span></div>
-            <div class="bar-col"><div class="bar" style="height: 68%"></div><span class="bar-val">840</span><span class="bar-year">22-23</span></div>
-            <div class="bar-col"><div class="bar" style="height: 74%"></div><span class="bar-val">920</span><span class="bar-year">23-24</span></div>
-            <div class="bar-col"><div class="bar" style="height: 85%"></div><span class="bar-val">1,050</span><span class="bar-year">24-25</span></div>
-            <div class="bar-col"><div class="bar" style="height: 93%"></div><span class="bar-val">1,150</span><span class="bar-year">25-26</span></div>
-            <div class="bar-col"><div class="bar bar-current" style="height: 100%"></div><span class="bar-val">1,240</span><span class="bar-year">26-27</span></div>
+            <div class="bar-col"><div class="bar" style="height: 50%"></div><span class="bar-val" data-target="620">0</span><span class="bar-year">19-20</span></div>
+            <div class="bar-col"><div class="bar" style="height: 55%"></div><span class="bar-val" data-target="680">0</span><span class="bar-year">20-21</span></div>
+            <div class="bar-col"><div class="bar" style="height: 60%"></div><span class="bar-val" data-target="750">0</span><span class="bar-year">21-22</span></div>
+            <div class="bar-col"><div class="bar" style="height: 68%"></div><span class="bar-val" data-target="840">0</span><span class="bar-year">22-23</span></div>
+            <div class="bar-col"><div class="bar" style="height: 74%"></div><span class="bar-val" data-target="920">0</span><span class="bar-year">23-24</span></div>
+            <div class="bar-col"><div class="bar" style="height: 85%"></div><span class="bar-val" data-target="1050">0</span><span class="bar-year">24-25</span></div>
+            <div class="bar-col"><div class="bar" style="height: 93%"></div><span class="bar-val" data-target="1150">0</span><span class="bar-year">25-26</span></div>
+            <div class="bar-col"><div class="bar bar-current" style="height: 100%"></div><span class="bar-val" data-target="1240">0</span><span class="bar-year">26-27</span></div>
           </div>
           <p class="stage-note">Enrollment has grown from 620 to 1,240 students over seven academic years, an increase of 100 percent.</p>
         </div>
@@ -228,14 +228,14 @@
 
 <section class="staff-section" id="staff">
   <div class="container py-5">
-    <div class="mb-4">
+    <div class="mb-4 reveal">
       <h2 class="fw-bold">School leadership and staff</h2>
       <p class="text-muted">Principal, vice principal, physical training director and teaching faculty with qualifications and subjects handled.</p>
     </div>
 
     <div class="row g-4 mb-4">
       <div class="col-md-4">
-        <div class="staff-card staff-card-lead">
+        <div class="staff-card staff-card-lead reveal" data-delay="0">
           <div class="staff-avatar" style="background:#14315c">RM</div>
           <h3 class="staff-name">Dr. R. Meenakshi</h3>
           <p class="staff-role">Principal</p>
@@ -252,7 +252,7 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="staff-card staff-card-lead">
+        <div class="staff-card staff-card-lead reveal" data-delay="100">
           <div class="staff-avatar" style="background:#1e5b3a">SK</div>
           <h3 class="staff-name">Mr. S. Krishnamurthy</h3>
           <p class="staff-role">Vice Principal</p>
@@ -269,7 +269,7 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="staff-card staff-card-lead">
+        <div class="staff-card staff-card-lead reveal" data-delay="200">
           <div class="staff-avatar" style="background:#8a5a00">AK</div>
           <h3 class="staff-name">Mr. Anand Kumar</h3>
           <p class="staff-role">Physical Training Director</p>
@@ -289,7 +289,7 @@
 
     <div class="row g-4">
       <div class="col-md-6 col-xl-4">
-        <div class="staff-card">
+        <div class="staff-card reveal" data-delay="0">
           <div class="staff-avatar" style="background:#334155">LN</div>
           <h3 class="staff-name">Mrs. Lakshmi Narayanan</h3>
           <p class="staff-role">Senior Teacher</p>
@@ -304,7 +304,7 @@
         </div>
       </div>
       <div class="col-md-6 col-xl-4">
-        <div class="staff-card">
+        <div class="staff-card reveal" data-delay="80">
           <div class="staff-avatar" style="background:#7c2d12">RT</div>
           <h3 class="staff-name">Mr. Ravi Teja</h3>
           <p class="staff-role">Science Teacher</p>
@@ -319,7 +319,7 @@
         </div>
       </div>
       <div class="col-md-6 col-xl-4">
-        <div class="staff-card">
+        <div class="staff-card reveal" data-delay="160">
           <div class="staff-avatar" style="background:#4c1d95">PD</div>
           <h3 class="staff-name">Ms. Priya Deshpande</h3>
           <p class="staff-role">Language Teacher</p>
@@ -334,7 +334,7 @@
         </div>
       </div>
       <div class="col-md-6 col-xl-4">
-        <div class="staff-card">
+        <div class="staff-card reveal" data-delay="0">
           <div class="staff-avatar" style="background:#0f766e">MI</div>
           <h3 class="staff-name">Mr. Mohammed Irfan</h3>
           <p class="staff-role">Computer Teacher</p>
@@ -349,7 +349,7 @@
         </div>
       </div>
       <div class="col-md-6 col-xl-4">
-        <div class="staff-card">
+        <div class="staff-card reveal" data-delay="80">
           <div class="staff-avatar" style="background:#9f1239">SR</div>
           <h3 class="staff-name">Mrs. Sunita Rao</h3>
           <p class="staff-role">Mathematics Teacher</p>
@@ -364,7 +364,7 @@
         </div>
       </div>
       <div class="col-md-6 col-xl-4">
-        <div class="staff-card">
+        <div class="staff-card reveal" data-delay="160">
           <div class="staff-avatar" style="background:#365314">KS</div>
           <h3 class="staff-name">Mrs. Kavitha Shetty</h3>
           <p class="staff-role">Primary Teacher</p>
@@ -389,8 +389,66 @@ function showTab(group, id, btn) {
   document.getElementById(id).hidden = false;
   btn.classList.add('active');
   var panelId = group === 'stage-group' ? 'stage-panel' : 'fees-panel';
-  document.getElementById(panelId).hidden = false;
+  var panel = document.getElementById(panelId);
+  panel.hidden = false;
+  panel.style.animation = 'none';
+  panel.offsetHeight;
+  panel.style.animation = '';
 }
+
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var targets = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  if (reduce || !('IntersectionObserver' in window)) {
+    targets.forEach(function (el) { el.classList.add('in'); });
+    var chart = document.querySelector('.bar-chart');
+    if (chart) { chart.classList.add('grown'); document.querySelectorAll('.bar-val').forEach(function (el) { el.textContent = el.dataset.target; }); }
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      var d = el.dataset.delay ? parseInt(el.dataset.delay, 10) : 0;
+      setTimeout(function () { el.classList.add('in'); }, d);
+      io.unobserve(el);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach(function (el) { io.observe(el); });
+
+  var chart = document.querySelector('.bar-chart');
+  if (chart) {
+    var cio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        chart.classList.add('grown');
+        chart.querySelectorAll('.bar-col').forEach(function (col, i) {
+          var bar = col.querySelector('.bar');
+          var val = col.querySelector('.bar-val');
+          if (bar) { bar.style.transitionDelay = (i * 90) + 'ms'; }
+          if (val) {
+            var target = parseInt(val.dataset.target.replace(/,/g, ''), 10);
+            var suffix = val.dataset.suffix || '';
+            var start = performance.now();
+            var dur = 1100;
+            var delay = 300 + i * 90;
+            setTimeout(function () {
+              function tick(now) {
+                var p = Math.min((now - start) / dur, 1);
+                var eased = 1 - Math.pow(1 - p, 3);
+                val.textContent = Math.round(target * eased).toLocaleString('en-IN') + suffix;
+                if (p < 1) requestAnimationFrame(tick);
+              }
+              requestAnimationFrame(function (t) { start = t; requestAnimationFrame(tick); });
+            }, delay);
+          }
+        });
+        cio.unobserve(chart);
+      });
+    }, { threshold: 0.3 });
+    cio.observe(chart);
+  }
+})();
 </script>
 
 <%- include('partials/footer') %>
