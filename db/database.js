@@ -1,7 +1,16 @@
 const { DatabaseSync } = require('node:sqlite');
 const path = require('path');
 
-const DB_PATH = path.join(__dirname, 'school.db');
+// On Vercel the deployment filesystem is read-only; /tmp is the only writable location.
+// Locally we keep the database next to the code in db/.
+function resolveDbPath() {
+  if (process.env.VERCEL || process.env.DB_PATH) {
+    return process.env.DB_PATH || path.join('/tmp', 'school.db');
+  }
+  return path.join(__dirname, 'school.db');
+}
+
+const DB_PATH = resolveDbPath();
 let db;
 
 function getDb() {

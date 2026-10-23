@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Sunrise Public School - Student Profile & Fee Management System (Nursery to SSLC)",
   "main": "server.js",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "start": "node server.js",
     "seed": "node seed.js"
@@ -17,8 +20,8 @@
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cookie-session": "^2.1.1",
     "ejs": "^3.1.10",
-    "express": "^4.21.0",
-    "express-session": "^1.18.0"
+    "express": "^4.21.0"
   }
 }

@@ -10,7 +10,42 @@ npm run seed     # creates db/school.db with 25 sample students
 npm start        # http://localhost:3000
 ```
 
-## Custom Domain
+## Deploying to Vercel
+
+The app is configured for Vercel's serverless functions:
+
+- `api/index.js` exports the Express app (no `listen()` call on Vercel).
+- `vercel.json` routes all requests to that function and bundles `views/` and `public/`.
+- On Vercel the SQLite database lives at `/tmp/school.db` (the deployment filesystem is read-only).
+- The database is **auto-seeded with sample data on cold start** if empty, because `/tmp` is
+  ephemeral: any data written at runtime is lost when the function instance recycles.
+- Sessions use signed cookies (`cookie-session`), so login survives serverless instance changes.
+- Node runtime is pinned to `22.x` in `package.json` (`node:sqlite` requires Node >= 22.5).
+
+### Deploy steps
+
+1. Push this repository to GitHub.
+2. In Vercel, click **Add New Project** and import the repository. Vercel reads `vercel.json`
+   automatically; no framework preset or build command is needed.
+3. After the first deploy, open the production URL.
+4. When your custom domain is ready: add it in Vercel **Project Settings > Domains**, point DNS
+   at Vercel, then set environment variables:
+
+| Variable | Value |
+|---|---|
+| `SITE_URL` | `https://www.yourdomain.edu.in` |
+| `SESSION_SECRET` | a long random string |
+
+5. Redeploy. Canonical tags will then use your real domain.
+
+### Production data note
+
+`/tmp` storage is fine for demos and internal trials. For a permanent installation where fee
+payments and records must survive instance recycling, replace SQLite with a hosted database
+(Vercel Postgres, Turso, or any MySQL/PostgreSQL server). The data access layer is isolated in
+`db/database.js`, so only that file needs to change.
+
+## Custom Domain (manual / non-Vercel)
 
 The site emits a canonical URL on every page. When you connect a custom domain, set the
 `SITE_URL` environment variable before starting the server so canonical tags and any future

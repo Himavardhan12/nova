@@ -3,10 +3,9 @@ const path = require('path');
 const fs = require('fs');
 const {
   initSchema, getDb, CLASSES, subjectsForClass,
-  calculateGrade, nextStudentCode
+  calculateGrade, nextStudentCode, DB_PATH
 } = require('./db/database');
 
-const DB_PATH = path.join(__dirname, 'db', 'school.db');
 const AY = '2025-26';
 
 function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
@@ -17,8 +16,16 @@ function resetDb() {
   return initSchema();
 }
 
-function seed() {
-  const db = resetDb();
+function seed(opts = {}) {
+  const reset = opts.reset !== false;
+  let db;
+  if (reset) {
+    db = resetDb();
+  } else {
+    db = initSchema();
+    const existing = db.prepare('SELECT COUNT(*) c FROM students').get().c;
+    if (existing > 0) return false;
+  }
 
   const adminHash = bcrypt.hashSync('123456', 10);
   const studentHash = bcrypt.hashSync('654321', 10);
@@ -211,6 +218,16 @@ function seed() {
   console.log('Sample student codes:');
   db.prepare('SELECT student_code, name, class FROM students ORDER BY id LIMIT 5').all()
     .forEach(s => console.log(`  ${s.student_code}  ${s.name} (${s.class})`));
+  return true;
 }
 
-seed();
+// Seed only if the database has no students (used on Vercel cold starts).
+function seedIfEmpty() {
+  return seed({ reset: false });
+}
+
+module.exports = { seed, seedIfEmpty };
+
+if (require.main === module) {
+  seed({ reset: true });
+}
