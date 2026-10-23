@@ -19,6 +19,10 @@ body {
   flex-direction: column;
 }
 
+body.home-body {
+  background: linear-gradient(180deg, #000000 0%, #0b0d12 20%, #2a2f38 45%, #8b929c 72%, #e8eaed 90%, #ffffff 100%);
+}
+
 main { flex: 1; }
 
 h1, h2, h3, h4, h5, h6,
@@ -82,10 +86,19 @@ h1, h2, h3, h4, h5, h6,
 .hero h1 { font-weight: 700; }
 
 .stage-section {
-  background: linear-gradient(160deg, #0a0a0a 0%, #1a1d23 55%, #0d0f14 100%);
   color: #e8eaed;
 }
+.home-body .stage-section {
+  background: transparent;
+}
 .stage-sub { color: #9aa0a6; margin-bottom: 0; }
+.stage-placeholder {
+  color: #7d838c;
+  text-align: center;
+  padding: 1.5rem 0;
+  margin: 0;
+  font-size: .95rem;
+}
 .stage-tabs {
   display: flex;
   flex-wrap: wrap;
