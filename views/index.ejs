@@ -1,21 +1,28 @@
 <%- include('partials/header') %>
 
 <section class="hero">
+  <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
   <div class="container">
     <div class="row">
       <div class="col-lg-8">
+        <div class="hero-eyebrow hero-reveal">Nursery to Class 10 SSLC &#9670; Bengaluru</div>
         <h1 class="mb-3 hero-reveal">Student records, fees and exam results for Nursery through Class 10</h1>
         <p class="lead mb-4 hero-reveal">
           This portal is used by Sunrise Public School staff, students and parents to manage
           and view admission details, fee payments, marks, bus routes and complaints.
         </p>
-        <div class="hero-reveal"><a href="/login" class="btn btn-warning btn-lg px-4 fw-semibold">Sign in to the portal</a></div>
+        <div class="hero-reveal d-flex flex-wrap gap-3">
+          <a href="/login" class="btn btn-warning btn-lg px-4 fw-semibold">Sign in to the portal</a>
+          <a href="#contact" class="btn btn-outline-light btn-lg px-4 fw-semibold">Contact office</a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <section class="stage-section" id="classes">
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
   <div class="container py-5">
     <div class="mb-4 reveal">
       <h2 class="fw-bold text-white">Classes covered</h2>
@@ -166,6 +173,8 @@
 </section>
 
 <section class="stage-section" id="about">
+  <div class="orb orb-2" aria-hidden="true"></div>
+  <div class="orb orb-3" aria-hidden="true"></div>
   <div class="container py-5">
     <div class="mb-4 reveal">
       <h2 class="fw-bold text-white">About the school</h2>
@@ -383,6 +392,8 @@
 </section>
 
 <section class="contact-section" id="contact">
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-3" aria-hidden="true"></div>
   <div class="container py-5">
     <div class="row justify-content-center">
       <div class="col-lg-8">
@@ -434,6 +445,74 @@ function showTab(group, id, btn) {
   panel.offsetHeight;
   panel.style.animation = '';
 }
+
+(function () {
+  var canvas = document.getElementById('heroCanvas');
+  if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  var dots = [], W = 0, H = 0, raf = null, running = false;
+
+  function resize() {
+    var r = canvas.getBoundingClientRect();
+    W = canvas.width = Math.max(1, Math.floor(r.width));
+    H = canvas.height = Math.max(1, Math.floor(r.height));
+    var count = Math.min(70, Math.floor(W / 22));
+    dots = [];
+    for (var i = 0; i < count; i++) {
+      dots.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        r: Math.random() * 1.6 + 0.6
+      });
+    }
+  }
+
+  function step() {
+    if (!running) return;
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < dots.length; i++) {
+      var d = dots[i];
+      d.x += d.vx; d.y += d.vy;
+      if (d.x < 0 || d.x > W) d.vx *= -1;
+      if (d.y < 0 || d.y > H) d.vy *= -1;
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(180,83,9,0.55)';
+      ctx.fill();
+      for (var j = i + 1; j < dots.length; j++) {
+        var e = dots[j];
+        var dx = d.x - e.x, dy = d.y - e.y;
+        var dist = dx * dx + dy * dy;
+        if (dist < 13000) {
+          ctx.beginPath();
+          ctx.moveTo(d.x, d.y);
+          ctx.lineTo(e.x, e.y);
+          ctx.strokeStyle = 'rgba(180,83,9,' + (0.28 * (1 - dist / 13000)) + ')';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+    }
+    raf = requestAnimationFrame(step);
+  }
+
+  function start() { if (!running) { running = true; step(); } }
+  function stop() { running = false; if (raf) cancelAnimationFrame(raf); raf = null; }
+
+  resize();
+  window.addEventListener('resize', function () { resize(); });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { e.isIntersecting ? start() : stop(); });
+    }).observe(canvas);
+  } else { start(); }
+  document.addEventListener('visibilitychange', function () {
+    document.hidden ? stop() : start();
+  });
+})();
 
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

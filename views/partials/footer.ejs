@@ -32,5 +32,19 @@
   </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function () {
+  var bar = document.getElementById('scrollProgress');
+  var nav = document.querySelector('.navbar');
+  function onScroll() {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    if (bar) bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    if (nav) nav.classList.toggle('scrolled', d.scrollTop > 8);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
 </body>
 </html>
